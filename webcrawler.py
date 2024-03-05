@@ -3,23 +3,35 @@ from seleniumwire.utils import decode as sw_decode
 from selenium.webdriver.common.by import By
 from urllib.parse import urlparse
 import os
-import shutil
 import pickle
 import time
 import json
 from linkfinder_js import js_link_finder
 import random
 import sys
+from helpers import create_project, is_file, add_link
+from settings import mimes, link_xpaths, bad_links, schemes
+from difflib import SequenceMatcher
+import winsound
+
 
 try:
     url = sys.argv[1]
 except:
-    url = "https://target.com/"
+    url = "https://divar.ir/"
 
-def request_interceptor(request):
-    if "firefox" not in request.url and "mozilla" not  in request.url:
-        pass
-        # print("REQ:", request)
+origin_compare = True
+origin_compare_ratio = 0.6
+
+links = []
+
+requests = []
+url_parsed = urlparse(url)
+
+# Create project and its configuations
+project_name = url_parsed.netloc.replace("www.", "").replace(".", "_")
+links = add_link(links, url)
+
 
 def response_interceptor(request, response):
     if ("firefox" not in request.host) and ("mozilla" not in request.host) and ("google-analytics" not in request.host) and ("google.com" not in request.host):
@@ -76,68 +88,67 @@ def response_interceptor(request, response):
 
 
 
-requests = []
-
-
-with open("./mimeData.json", "r") as f_:
-    mimes = f_.read()
-mimes = json.loads(mimes)
-
 # Creates an instance of the chrome driver (browser)
 driver = webdriver.Firefox()
-driver.request_interceptor = request_interceptor
 driver.response_interceptor = response_interceptor
 
 print("Get url: {}".format(url))
 url_parsed = urlparse(url)
 
-# Create project and its configuations
-try:
-    shutil.rmtree("./projects/")
-except:
-    pass
-if os.path.exists("./projects") == False:
-    os.mkdir("./projects")
-
-project_name = url_parsed.netloc.replace("www.", "").replace(".", "_")
-if os.path.exists("./projects/" + project_name) == False:
-    print("[*] Creating project ...")
-    os.mkdir("./projects/" + project_name)
-    os.mkdir("./projects/" + project_name + "/requests_pickles")
-    os.mkdir("./projects/" + project_name + "/origins")
-    print("[+] Project created {}".format(project_name))
-else:
-    while True:
-        project_name = input("[*] Porject exists, Enter a new name for your project: [Not {}]".format(project_name))
-        if os.path.exists("./projects/" + project_name) == False:
-            os.mkdir("./projects/" + project_name)
-            break
+# Creating project
+create_project(project_name)
+disallowed_origins = []
+allowed_origins = [
+    urlparse(url).scheme + "://" + urlparse(url).netloc + "/",
+]
+origins_conf = {
+    "allowed": [urlparse(url).scheme + "://" + urlparse(url).netloc + "/"],
+    "disallowed": []
+}
+with open("./projects/" + project_name + "/origins_conf.json", "w") as f_:
+    f_.write(json.dumps(origins_conf))
 
 
-def is_file(name):
-    try:
-        ext = "." + name.split(".")[-1]
-        fileType = [y['name'] for y in mimes if ext in y['fileTypes']]
-        if "image" in fileType[0] or "font" in fileType[0] or "audio" in fileType[0] or "video" in fileType[0]:
-            return True
+def origins_chk(link):
+    link_origin = urlparse(link).scheme + "://" + urlparse(link).netloc + "/"
+
+
+        # else:
+        #     return False
+
+    if link_origin in origins_conf["allowed"]:
+        return True
+    elif link_origin not in origins_conf['allowed'] and link_origin not in origins_conf['disallowed']:
+        if origin_compare:
+            _tmp = [SequenceMatcher(None, y, link_origin).ratio() > origin_compare_ratio for y in origins_conf['allowed']]
+            if len([y for y in _tmp if y == True]) > len([y for y in _tmp if y == False]):
+                origins_conf["allowed"].append(link_origin)
+                with open("./projects/" + project_name + "/origins_conf.json", "w") as f_:
+                        f_.write(json.dumps(origins_conf))
+                return True
+            elif len([y for y in _tmp if y == True]) == 0:
+                origins_conf["disallowed"].append(link_origin)
+                with open("./projects/" + project_name + "/origins_conf.json", "w") as f_:
+                    f_.write(json.dumps(origins_conf))
+                return False
+            
+
+        while True:
+            winsound.Beep(500, 500)
+            add_it_to_allowed = input(link_origin + " -> Do you wanna add it to allowed origins ? [Y/[N]] ")
+            if add_it_to_allowed == "Y" or add_it_to_allowed == "y":
+                origins_conf["allowed"].append(link_origin)
+                with open("./projects/" + project_name + "/origins_conf.json", "w") as f_:
+                    f_.write(json.dumps(origins_conf))
+                return True
+            else:
+                origins_conf["disallowed"].append(link_origin)
+                with open("./projects/" + project_name + "/origins_conf.json", "w") as f_:
+                    f_.write(json.dumps(origins_conf))
+                return False
+    else:
         return False
-    except:
-        return False
-
-
-def add_link(links, link):
-    if len([x for x in links if urlparse(url=link).scheme + "://" + urlparse(url=link).netloc + urlparse(url=link).path + urlparse(url=link).params + urlparse(url=link).query in x['link']]) == 0:
-        links.append({
-            "link": link,
-            "checked": 0
-        })
-    return links
-
-links = []
-links = add_link(links, url)
-
-
-
+                
 
 
 while len([x for x in links if x["checked"] == 0]) != 0:
@@ -146,67 +157,37 @@ while len([x for x in links if x["checked"] == 0]) != 0:
         print(len(links) - len([x for x in links if x["checked"] == 0]), "/", len(links))
         del driver.requests
         try:
-            if is_file(urlparse(url=current_link['link']).path.split("/")[-1]) == False:
-                driver.get(url=current_link['link'])
-            else:
-                links[links.index(current_link)]['checked'] = -1    
-                links[links.index(current_link)]['err_reason'] = "is_file"
+            if origins_chk(current_link['link']) == True:
+                if is_file(urlparse(url=current_link['link']).path.split("/")[-1]) == False:
+                    driver.get(url=current_link['link'])
+                else:
+                    links[links.index(current_link)]['checked'] = -1    
+                    links[links.index(current_link)]['err_reason'] = "is_file"
         except Exception as e:
+            print(e)
             links[links.index(current_link)]['checked'] = -1
             links[links.index(current_link)]['err_reason'] = str(e)
             continue
 
         # Where are links ?
-        href_elms = driver.find_elements(By.XPATH, "//*[@href]")
-        for elm in href_elms:
-            try:
-                link = elm.get_dom_attribute("href")
-                if link.startswith("resource://") or link.startswith("chrome://"):
+        for xpath in link_xpaths:
+            elms = driver.find_elements(By.XPATH, xpath['xpath'])
+            for elm in elms:
+                try:
+                    link = elm.get_dom_attribute(xpath['attr'])
+                    for bad in bad_links:
+                        if bad in link:
+                            raise Exception("Bad link detected .")
+                except:
                     continue
-            except:
-                continue
-            if link.startswith("http://") == False and link.startswith("https://") == False:
-                current_url = urlparse(driver.current_url).scheme + "://" + urlparse(driver.current_url).netloc
-                if link.startswith("/"):
-                    link = current_url + link
-                elif link.startswith("/") == False:
-                    link = driver.current_url + "/" + link
-                links = add_link(links, link)
-            
-        src_elms = driver.find_elements(By.XPATH, "//*[@src]")
-        for elm in src_elms:
-            try:
-                link = elm.get_dom_attribute("src")
-                if link.startswith("resource://") or link.startswith("chrome://"):
-                    continue
-                if link.startswith("data:image"):
-                    continue
-            except:
-                continue
-            if link.startswith("http://") == False and link.startswith("https://") == False:
-                current_url = urlparse(driver.current_url).scheme + "://" + urlparse(driver.current_url).netloc
-                if link.startswith("/"):
-                    link = current_url + link
-                elif link.startswith("/") == False:
-                    link = driver.current_url + "/" + link
-                links = add_link(links, link)
+                if len([y for y in schemes if y in link]) == 0:
+                    current_url = urlparse(driver.current_url).scheme + "://" + urlparse(driver.current_url).netloc
+                    if link.startswith("/"):
+                        link = current_url + link
+                    elif link.startswith("/") == False:
+                        link = driver.current_url + "/" + link
+                    links = add_link(links, link)
 
-
-        action_elms = driver.find_elements(By.XPATH, "//*[@action]")
-        for elm in action_elms:
-            try:
-                link = elm.get_dom_attribute("action")
-                if link.startswith("resource://") or link.startswith("chrome://"):
-                    continue
-            except:
-                continue
-            if link.startswith("http://") == False and link.startswith("https://") == False:
-                current_url = urlparse(driver.current_url).scheme + "://" + urlparse(driver.current_url).netloc
-                if link.startswith("/"):
-                    link = current_url + link
-                elif link.startswith("/") == False:
-                    link = driver.current_url + "/" + link
-                links = add_link(links, link)
 
         links[links.index(current_link)]['checked'] = 1
         with open("./projects/" + project_name + "/links_found.json", "w") as f_:
