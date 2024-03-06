@@ -1,6 +1,8 @@
 import shutil, os
 from urllib.parse import urlparse
 from settings import mimes, files
+import re
+import json
 
 def create_project(project_name):
 
@@ -23,7 +25,35 @@ def create_project(project_name):
             if os.path.exists("./projects/" + project_name) == False:
                 os.mkdir("./projects/" + project_name)
                 break
+    
+    if os.path.exists("./projects/" + project_name + "/just_one_no_more_patterns.txt") == False:
+        with open("./projects/" + project_name + "/just_one_no_more_patterns.txt", "w") as f_:
+            patterns = []
+            while True:
+                pattern = input("If there is any pattern of URL that you want to crawl once, please write it here as regex: [Blank to pass] ")
+                if pattern == "":
+                    break
 
+                error = ""
+                while True:
+                    if error != "":
+                        example = input(error + " - Enter an example for your regex pattern : [Enter to leave] ")
+                    else:
+                        example = input("Enter an example for your regex pattern : [Enter to leave] ")
+                    if example == "":
+                        break
+                    try:
+                        re.search(pattern, example).string
+                        break
+                    except AttributeError:
+                        error = "[Not match]"
+                        continue
+                patterns.append({
+                    'pattern': pattern,
+                    'example': example
+                })
+            f_.write(json.dumps(patterns))
+        
 
 def is_file(name):
     try:

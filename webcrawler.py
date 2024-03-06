@@ -13,6 +13,7 @@ from helpers import create_project, is_file, add_link
 from settings import mimes, link_xpaths, bad_links, schemes
 from difflib import SequenceMatcher
 import winsound
+import re
 
 
 try:
@@ -145,6 +146,10 @@ def origins_chk(link):
         return False
                 
 
+with open("./projects/" + project_name + "/just_one_no_more_patterns.txt", "r") as f_:
+    just_one_no_more_patterns = json.loads(f_.read())
+    just_one_no_more_patterns = [x['pattern'] for x in just_one_no_more_patterns]
+
 
 while len([x for x in links if x["checked"] == 0]) != 0:
     for current_link in [x for x in links if x["checked"] == 0]:
@@ -154,7 +159,14 @@ while len([x for x in links if x["checked"] == 0]) != 0:
         try:
             if origins_chk(current_link['link']) == True:
                 if is_file(urlparse(url=current_link['link']).path.split("/")[-1]) == False:
+
+                    if len([x for x in just_one_no_more_patterns if re.match(x, current_link['link'])]) != 0: # current_link['link'] is in patterns
+                        if len([y for y in links if y['checked'] == 1 and len([x for x in just_one_no_more_patterns if re.match(x, y['link'])])]) != 0: # link like current_link['link'] checked before .
+                            raise Exception("just_one_no_more_patterns_caught")
+
                     driver.get(url=current_link['link'])
+                    # else:
+                        # print("Duplicate link .")
                 else:
                     raise Exception("is_file")
             else:
