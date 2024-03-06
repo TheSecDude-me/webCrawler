@@ -24,13 +24,18 @@ except:
 origin_compare = True
 origin_compare_ratio = 0.6
 
-links = []
+url_parsed = urlparse(url)
+project_name = url_parsed.netloc.replace("www.", "").replace(".", "_")
+create_project(project_name)
+
+
+with open("./projects/" + project_name + "/links_found.json", "r") as f_:
+    links = json.loads(f_.read())
 
 requests = []
-url_parsed = urlparse(url)
 
 # Create project and its configuations
-project_name = url_parsed.netloc.replace("www.", "").replace(".", "_")
+
 links = add_link(links, url)
 
 
@@ -66,15 +71,14 @@ def response_interceptor(request, response):
                         if link.startswith("http://") == False and link.startswith("https://") == False:
                             if link.startswith("/"):
                                 links = add_link(links, urlparse(request.url).scheme + "://" + urlparse(request.url).netloc + link)
+                            elif link.startswith("./"):
+                                links = add_link(links, urlparse(request.url).scheme + "://" + urlparse(request.url).netloc + link[1:])
                             else:
                                 links = add_link(links, urlparse(request.url).scheme + "://" + urlparse(request.url).netloc + "/" + link)
                         else:
                             links = add_link(links, link)
-
-
         except Exception as e:
             pass
-
 
 
         global requests
@@ -96,16 +100,14 @@ driver.response_interceptor = response_interceptor
 print("Get url: {}".format(url))
 url_parsed = urlparse(url)
 
-# Creating project
-create_project(project_name)
-disallowed_origins = []
-allowed_origins = [
-    urlparse(url).scheme + "://" + urlparse(url).netloc + "/",
-]
-origins_conf = {
-    "allowed": [urlparse(url).scheme + "://" + urlparse(url).netloc + "/"],
-    "disallowed": []
-}
+with open("./projects/" + project_name + "/origins_conf.json", "r") as f_:
+    origins_conf = json.loads(f_.read())
+    if len(origins_conf) == 0:
+        origins_conf = {
+            "allowed": [urlparse(url).scheme + "://" + urlparse(url).netloc + "/"],
+            "disallowed": []
+        }
+
 with open("./projects/" + project_name + "/origins_conf.json", "w") as f_:
     f_.write(json.dumps(origins_conf))
 
@@ -159,14 +161,11 @@ while len([x for x in links if x["checked"] == 0]) != 0:
         try:
             if origins_chk(current_link['link']) == True:
                 if is_file(urlparse(url=current_link['link']).path.split("/")[-1]) == False:
-
                     if len([x for x in just_one_no_more_patterns if re.match(x, current_link['link'])]) != 0: # current_link['link'] is in patterns
                         if len([y for y in links if y['checked'] == 1 and len([x for x in just_one_no_more_patterns if re.match(x, y['link'])])]) != 0: # link like current_link['link'] checked before .
                             raise Exception("just_one_no_more_patterns_caught")
 
                     driver.get(url=current_link['link'])
-                    # else:
-                        # print("Duplicate link .")
                 else:
                     raise Exception("is_file")
             else:

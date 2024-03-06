@@ -1,7 +1,4 @@
 Todo :
-    1. some links may start with ./ instead of /
-    2. create a regex list with the name of just_one_no_more, if any link match these regexes just check them one time and no more .
-    3. 
 
 
 
