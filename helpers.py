@@ -1,6 +1,6 @@
 import shutil, os
 from urllib.parse import urlparse
-from settings import mimes
+from settings import mimes, files
 
 def create_project(project_name):
 
@@ -29,7 +29,7 @@ def is_file(name):
     try:
         ext = "." + name.split(".")[-1]
         fileType = [y['name'] for y in mimes if ext in y['fileTypes']]
-        if "image" in fileType[0] or "font" in fileType[0] or "audio" in fileType[0] or "video" in fileType[0]:
+        if len([y for y in files if y in fileType[0]]) != 0:
             return True
         return False
     except:

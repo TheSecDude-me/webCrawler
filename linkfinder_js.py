@@ -68,9 +68,12 @@ def js_link_finder(file, regex_str=regex_str):
             no_dup_items.append(item)
     items = no_dup_items
 
-    # for link in all_links:
-        # if len([y for y in mimes if y['name'] == link]) > 0:
-            # all_links.remove(link)
-
+    
     all_links = list(all_links)
-    return all_links
+    links = []
+    for link in all_links:
+        if len([y for y in mimes if y['name'] == link]):
+            continue
+        links.append(link)
+
+    return links

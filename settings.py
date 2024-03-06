@@ -27,3 +27,7 @@ link_xpaths = [
 schemes = [
     "http://", "https://"
 ]
+
+files = [
+    "image", "font", "audio", "video"
+]

@@ -35,14 +35,11 @@ links = add_link(links, url)
 
 def response_interceptor(request, response):
     if ("firefox" not in request.host) and ("mozilla" not in request.host) and ("google-analytics" not in request.host) and ("google.com" not in request.host):
-        req_tld = urlparse(request.url).netloc.replace(".", "_")
-        req_dir = "./projects/" + project_name + "/origins/" + req_tld
+        req_dir = "./projects/" + project_name + "/origins/" + urlparse(request.url).netloc.replace(".", "_")
         try:
             os.mkdir(req_dir)
         except:
             pass
-
-
         try:
             content_type = dict(request.response.headers)['content-type']
             mime = list(filter(lambda x:x["name"]==content_type or (content_type in x['links']['deprecates']),mimes))
@@ -50,7 +47,10 @@ def response_interceptor(request, response):
                 ext = mime[0]['fileTypes'][0]
                 
                 data = sw_decode(request.response.body, request.response.headers.get('Content-Encoding', 'identity'))
-                file_name = request.path.split("/")[-1].split(".")[0] + ext
+                file_name = request.path.split("/")[-1] #.split(".")[0] + ext
+                if ext not in file_name:
+                    file_name = file_name + ext
+
                 file_path = req_dir + "/".join(request.path.split("/")[0:-1])
                 try:
                     os.makedirs(file_path)
@@ -111,11 +111,6 @@ with open("./projects/" + project_name + "/origins_conf.json", "w") as f_:
 
 def origins_chk(link):
     link_origin = urlparse(link).scheme + "://" + urlparse(link).netloc + "/"
-
-
-        # else:
-        #     return False
-
     if link_origin in origins_conf["allowed"]:
         return True
     elif link_origin not in origins_conf['allowed'] and link_origin not in origins_conf['disallowed']:
@@ -161,10 +156,10 @@ while len([x for x in links if x["checked"] == 0]) != 0:
                 if is_file(urlparse(url=current_link['link']).path.split("/")[-1]) == False:
                     driver.get(url=current_link['link'])
                 else:
-                    links[links.index(current_link)]['checked'] = -1    
-                    links[links.index(current_link)]['err_reason'] = "is_file"
+                    raise Exception("is_file")
+            else:
+                raise Exception("disallowed_origin")
         except Exception as e:
-            print(e)
             links[links.index(current_link)]['checked'] = -1
             links[links.index(current_link)]['err_reason'] = str(e)
             continue
