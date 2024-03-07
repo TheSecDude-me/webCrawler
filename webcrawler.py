@@ -38,6 +38,12 @@ with open("./projects/" + project_name + "/links_found.json", "r") as f_:
 with open("./projects/" + project_name + "/err_reqs.json", "r") as f_:
     err_reqs = json.loads(f_.read())
 
+with open("./projects/" + project_name + "/forms_found.json", "r") as f_:
+    forms = json.loads(f_.read())
+
+with open("./projects/" + project_name + "/inputs_found.json", "r") as f_:
+    inputs = json.loads(f_.read())
+
 requests = []
 
 # Create project and its configuations
@@ -223,8 +229,32 @@ while len([x for x in links if x["checked"] == 0]) != 0:
                     elif link.startswith("/") == False:
                         link = driver.current_url + "/" + link
                     links = add_link(links, link)
+        form_elms = driver.find_elements(By.XPATH, "//form")
+        if len(form_elms):
+            forms.append({
+                'url': current_link['link'],
+                'forms_count': len(form_elms)
+            })
+            
+            with open("./projects/" + project_name + "/forms_found.json", "w") as f_:
+                f_.write(json.dumps(forms))
 
 
+        input_elms = driver.find_elements(By.XPATH, "//input")
+        # textarea_elms = driver.find_elements(By.XPATH, "//textarea")
+        inputs_elms_all = input_elms
+        if len(inputs_elms_all):
+                    inputs.append({
+                        'url': current_link['link'],
+                        'inputs_count': len(inputs_elms_all)
+                    })
+                    
+                    with open("./projects/" + project_name + "/inputs_found.json", "w") as f_:
+                        f_.write(json.dumps(inputs))
+
+
+        # Where are forms ?
+        
         links[links.index(current_link)]['checked'] = 1
         with open("./projects/" + project_name + "/links_found.json", "w") as f_:
             f_.write(json.dumps(links))
