@@ -21,8 +21,11 @@ try:
 except:
     url = "https://divar.ir/"
 
-origin_compare = True
+origin_compare = False
 origin_compare_ratio = 0.6
+
+origin_contains = True
+origin_contains_str = "divar"
 
 url_parsed = urlparse(url)
 project_name = url_parsed.netloc.replace("www.", "").replace(".", "_")
@@ -31,6 +34,9 @@ create_project(project_name)
 
 with open("./projects/" + project_name + "/links_found.json", "r") as f_:
     links = json.loads(f_.read())
+
+with open("./projects/" + project_name + "/err_reqs.json", "r") as f_:
+    err_reqs = json.loads(f_.read())
 
 requests = []
 
@@ -41,6 +47,17 @@ links = add_link(links, url)
 
 def response_interceptor(request, response):
     if ("firefox" not in request.host) and ("mozilla" not in request.host) and ("google-analytics" not in request.host) and ("google.com" not in request.host):
+        if origins_chk(request.url):
+            if str(request.response.status_code).startswith("4") or str(request.response.status_code).startswith("5"):
+                err_reqs.append({
+                    "url": request.url,
+                    "status_code": request.response.status_code,
+                    "method": request.method,
+                    "request_headers": dict(request.headers),
+                    "response_headers": dict(request.response.headers)
+                })
+                with open("./projects/" + project_name + "/err_reqs.json", "w") as f_:
+                    f_.write(json.dumps(err_reqs))
         req_dir = "./projects/" + project_name + "/origins/" + urlparse(request.url).netloc.replace(".", "_")
         try:
             os.mkdir(req_dir)
@@ -94,7 +111,9 @@ def response_interceptor(request, response):
 
 
 # Creates an instance of the chrome driver (browser)
+print("[*] Lauching browser ...")
 driver = webdriver.Firefox()
+print("[+] Browser launched successfully ...")
 driver.response_interceptor = response_interceptor
 
 print("Get url: {}".format(url))
@@ -117,6 +136,17 @@ def origins_chk(link):
     if link_origin in origins_conf["allowed"]:
         return True
     elif link_origin not in origins_conf['allowed'] and link_origin not in origins_conf['disallowed']:
+        if origin_contains:
+            if origin_contains_str in link_origin:
+                origins_conf["allowed"].append(link_origin)
+                with open("./projects/" + project_name + "/origins_conf.json", "w") as f_:
+                        f_.write(json.dumps(origins_conf))
+                return True
+            else:
+                origins_conf["disallowed"].append(link_origin)
+                with open("./projects/" + project_name + "/origins_conf.json", "w") as f_:
+                    f_.write(json.dumps(origins_conf))
+                return False
         if origin_compare:
             _tmp = [SequenceMatcher(None, y, link_origin).ratio() > origin_compare_ratio for y in origins_conf['allowed']]
             if len([y for y in _tmp if y == True]) > len([y for y in _tmp if y == False]):
@@ -159,17 +189,17 @@ while len([x for x in links if x["checked"] == 0]) != 0:
         print(len(links) - len([x for x in links if x["checked"] == 0]), "/", len(links))
         del driver.requests
         try:
-            if origins_chk(current_link['link']) == True:
-                if is_file(urlparse(url=current_link['link']).path.split("/")[-1]) == False:
-                    if len([x for x in just_one_no_more_patterns if re.match(x, current_link['link'])]) != 0: # current_link['link'] is in patterns
-                        if len([y for y in links if y['checked'] == 1 and len([x for x in just_one_no_more_patterns if re.match(x, y['link'])])]) != 0: # link like current_link['link'] checked before .
-                            raise Exception("just_one_no_more_patterns_caught")
-
-                    driver.get(url=current_link['link'])
-                else:
-                    raise Exception("is_file")
-            else:
+            if origins_chk(current_link['link']) == False:
                 raise Exception("disallowed_origin")
+
+            if is_file(urlparse(url=current_link['link']).path.split("/")[-1]) == True:
+                raise Exception("is_file")
+
+            if len([x for x in just_one_no_more_patterns if re.match(x, current_link['link'])]) != 0: # current_link['link'] is in patterns
+                if len([y for y in links if y['checked'] == 1]) != 0: # link like current_link['link'] checked before .
+                    raise Exception("just_one_no_more_patterns_caught")
+
+            driver.get(url=current_link['link'])
         except Exception as e:
             links[links.index(current_link)]['checked'] = -1
             links[links.index(current_link)]['err_reason'] = str(e)

@@ -18,10 +18,6 @@ def delete_folder(dst):
 
 def create_project(project_name):
 
-    # try:
-    #     shutil.rmtree("./projects/")
-    # except:
-    #     pass
     if os.path.exists("./projects") == False:
         os.mkdir("./projects")
 
@@ -36,9 +32,19 @@ def create_project(project_name):
         f = open("./projects/" + project_name + "/just_one_no_more_patterns.txt", "w")
         f.write(json.dumps([]))
         f.close()
+        f = open("./projects/" + project_name + "/err_reqs.json", "w")
+        f.write(json.dumps([]))
+        f.close()
         f = open("./projects/" + project_name + "/links_found.json", "w")
         f.write(json.dumps([]))
         f.close()
+        f = open("./projects/" + project_name + "/forms_found.json", "w")
+        f.write(json.dumps([]))
+        f.close()
+        f = open("./projects/" + project_name + "/inputs_found.json", "w")
+        f.write(json.dumps([]))
+        f.close()
+        
         print("[+] Project created {}".format(project_name))
     else:
         while True:
@@ -57,7 +63,16 @@ def create_project(project_name):
                         f = open("./projects/" + p + "/just_one_no_more_patterns.txt", "w")
                         f.write(json.dumps([]))
                         f.close()
+                        f = open("./projects/" + project_name + "/err_reqs.json", "w")
+                        f.write(json.dumps([]))
+                        f.close()
                         f = open("./projects/" + p + "/links_found.json", "w")
+                        f.write(json.dumps([]))
+                        f.close()
+                        f = open("./projects/" + project_name + "/forms_found.json", "w")
+                        f.write(json.dumps([]))
+                        f.close()
+                        f = open("./projects/" + project_name + "/inputs_found.json", "w")
                         f.write(json.dumps([]))
                         f.close()
                         print("[+] Project created {}".format(p))
@@ -78,7 +93,16 @@ def create_project(project_name):
                 f = open("./projects/" + project_name + "/just_one_no_more_patterns.txt", "w")
                 f.write(json.dumps([]))
                 f.close()
+                f = open("./projects/" + project_name + "/err_reqs.json", "w")
+                f.write(json.dumps([]))
+                f.close()
                 f = open("./projects/" + project_name + "/links_found.json", "w")
+                f.write(json.dumps([]))
+                f.close()
+                f = open("./projects/" + project_name + "/forms_found.json", "w")
+                f.write(json.dumps([]))
+                f.close()
+                f = open("./projects/" + project_name + "/inputs_found.json", "w")
                 f.write(json.dumps([]))
                 f.close()
                 print("[+] Project created {}".format(project_name))
@@ -92,23 +116,35 @@ def create_project(project_name):
                     sys.exit(0)
                 if os.path.exists("./projects/" + project_name + "/origins"): print("[+] {}/origins folder exists .".format(project_name))
                 else:
-                    print("[-] {}/origins does not exists, Project is corrupted .")
+                    print("[-] {}/origins does not exist, Project is corrupted .")
                     sys.exit(0)
                 if os.path.exists("./projects/" + project_name + "/requests_pickles"): print("[+] ./projects/" + project_name + "/requests_pickles folder exists .")
                 else:
-                    print("[-] ./projects/" + project_name + "/requests_pickles does not exists, Project is corrupted .")
+                    print("[-] ./projects/" + project_name + "/requests_pickles does not exist, Project is corrupted .")
                     sys.exit(0)
                 if os.path.exists("./projects/" + project_name + "/origins_conf.json"): print("[+] ./projects/" + project_name + "/origins_conf.json file exists .")
                 else:
-                    print("[-] ./projects/" + project_name + "/origins_conf.json does not exists, project is corrupted .")
+                    print("[-] ./projects/" + project_name + "/origins_conf.json does not exist, project is corrupted .")
                     sys.exit(0)
                 if os.path.exists("./projects/" + project_name + "/just_one_no_more_patterns.txt"): print("[+] ./projects/" + project_name + "/just_one_no_more_patterns.txt exists .")
                 else:
-                    print("[-] ./projects/" + project_name + "/just_one_no_more_patterns.txt does not exists . Project is corrupted .")
+                    print("[-] ./projects/" + project_name + "/just_one_no_more_patterns.txt does not exist . Project is corrupted .")
+                    sys.exit(0)
+                if os.path.exists("[+] ./projects/" + project_name + "/err_reqs.json"): print("./projects/" + project_name + "/err_reqs.json exists .")
+                else:
+                    print("[-] ./projects/" + project_name + "/err_reqs.json does not exists . Project is corrupted .")
                     sys.exit(0)
                 if os.path.exists("./projects/" + project_name + "/links_found.json"): print("[+]./projects/" + project_name + "/links_found.json exists .")
                 else:
-                    print("[-] ./projects/" + project_name + "/links_found.json does not exists . Project is corrupted .")
+                    print("[-] ./projects/" + project_name + "/links_found.json does not exist . Project is corrupted .")
+                    sys.exit(0)                
+                if os.path.exists("./projects/" + project_name + "/forms_found.json"): print("[+] ./projects/" + project_name + "/forms_found.json file exists .")
+                else:
+                    print("[-] ./projects/" + project_name + "/forms_found.json does not exist .")
+                    sys.exit(0)
+                if os.path.exists("./projects/" + project_name + "/inputs_found.json"): print("[+] ./projects/" + project_name + "/inputs_found.json file exists .")
+                else:
+                    print("[-] ./projects/" + project_name + "/inputs_found.json does not exist .")
                     sys.exit(0)
                 break
             else:
