@@ -19,13 +19,13 @@ import re
 try:
     url = sys.argv[1]
 except:
-    url = "https://divar.ir/"
+    url = "https://scsi4me.com/"
 
 origin_compare = False
 origin_compare_ratio = 0.6
-
+reqs_timeout = 60
 origin_contains = True
-origin_contains_str = "divar"
+origin_contains_str = "scsi4me"
 
 url_parsed = urlparse(url)
 project_name = url_parsed.netloc.replace("www.", "").replace(".", "_")
@@ -119,6 +119,7 @@ def response_interceptor(request, response):
 # Creates an instance of the chrome driver (browser)
 print("[*] Lauching browser ...")
 driver = webdriver.Firefox()
+driver.set_page_load_timeout(reqs_timeout)
 print("[+] Browser launched successfully ...")
 driver.response_interceptor = response_interceptor
 
@@ -191,7 +192,6 @@ with open("./projects/" + project_name + "/just_one_no_more_patterns.txt", "r") 
 
 while len([x for x in links if x["checked"] == 0]) != 0:
     for current_link in [x for x in links if x["checked"] == 0]:
-        time.sleep(random.random() * 3)
         print(len(links) - len([x for x in links if x["checked"] == 0]), "/", len(links))
         del driver.requests
         try:
@@ -204,7 +204,8 @@ while len([x for x in links if x["checked"] == 0]) != 0:
             if len([x for x in just_one_no_more_patterns if re.match(x, current_link['link'])]) != 0: # current_link['link'] is in patterns
                 if len([y for y in links if y['checked'] == 1]) != 0: # link like current_link['link'] checked before .
                     raise Exception("just_one_no_more_patterns_caught")
-
+                
+            time.sleep(random.random() * 3)
             driver.get(url=current_link['link'])
         except Exception as e:
             links[links.index(current_link)]['checked'] = -1

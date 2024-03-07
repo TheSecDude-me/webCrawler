@@ -31,3 +31,7 @@ schemes = [
 files = [
     "image", "font", "audio", "video"
 ]
+
+search_for_tags = [
+    'form', 'input', 'textarea', 'iframe'
+]
