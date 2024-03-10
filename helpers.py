@@ -1,10 +1,71 @@
-import shutil, os
+import os
 from urllib.parse import urlparse
-from settings import mimes, files
+from settings import mimes, files, project_files, project_dirs
 import re
 import json
 import pathlib
 import sys
+
+def init_settings(settings, project_name):
+    print("init_settings ...")
+    if settings['origin_contains']:
+        if len(settings["origin_contains_list"]) == 0:
+            while True:
+                origin_contains_str = input("[*] Enter a string for origin contains: [Separate them with , like site,web,blog] ")
+                if origin_contains_str != "":
+                    break
+            origin_contains_list = [y.replace(" ", "") for y in origin_contains_str.split(",")]
+            settings["origin_contains_list"] = origin_contains_list
+            with open("./projects/" + project_name + "/settings.json", "w") as f_:
+                f_.write(json.dumps(settings))
+    return settings
+
+def init_origins_conf(settings, project_name):
+    print("init origins_conf ...")
+    with open("./projects/" + project_name + "/origins_conf.json", "r") as f_:
+        origins_conf = json.loads(f_.read())
+        if len(origins_conf) == 0:
+            origins_conf["allowed"].append(urlparse(settings['url']).scheme + "://" + urlparse(settings['url']).netloc + "/")
+            with open("./projects/" + project_name + "/origins_conf.json", "w") as f_:
+                    f_.write(json.dumps(origins_conf))
+    return origins_conf
+
+def init_url_regex_patterns(project_name):
+    print("init url_regex_patterns...")
+    with open("./projects/" + project_name + "/url_regex_patterns.json", "r") as f_:
+        url_regex_patterns = json.loads(f_.read())
+        if len(url_regex_patterns) == 0:
+            with open("./projects/" + project_name + "/url_regex_patterns.json", "w") as f_:
+                patterns = []
+                while True:
+                    pattern = input("If there is any pattern of URL that you want to crawl once, please write it here as regex: [Blank to pass] ")
+                    if pattern == "":
+                        break
+
+                    error = ""
+                    while True:
+                        if error != "":
+                            example = input(error + " - Enter an example for your regex pattern : [Enter to leave] ")
+                        else:
+                            example = input("Enter an example for your regex pattern : [Enter to leave] ")
+                        if example == "":
+                            break
+                        try:
+                            re.search(pattern, example).string
+                            break
+                        except AttributeError:
+                            error = "[Not match]"
+                            continue
+                    patterns.append({
+                        'pattern': pattern,
+                        'example': example
+                    })
+                f_.write(json.dumps(patterns))
+    return url_regex_patterns
+
+
+
+
 
 
 def delete_folder(dst):
@@ -16,35 +77,28 @@ def delete_folder(dst):
             sub.unlink()
     pth.rmdir()
 
-def create_project(project_name):
-
+def create_project(project_name, settings):
     if os.path.exists("./projects") == False:
         os.mkdir("./projects")
 
     if os.path.exists("./projects/" + project_name) == False:
         print("[*] Creating project ...")
         os.mkdir("./projects/" + project_name)
-        os.mkdir("./projects/" + project_name + "/requests_pickles")
-        os.mkdir("./projects/" + project_name + "/origins")
-        f = open("./projects/" + project_name + "/origins_conf.json", "w")
-        f.write(json.dumps({}))
-        f.close()
-        f = open("./projects/" + project_name + "/just_one_no_more_patterns.txt", "w")
-        f.write(json.dumps([]))
-        f.close()
-        f = open("./projects/" + project_name + "/err_reqs.json", "w")
-        f.write(json.dumps([]))
-        f.close()
-        f = open("./projects/" + project_name + "/links_found.json", "w")
-        f.write(json.dumps([]))
-        f.close()
-        f = open("./projects/" + project_name + "/forms_found.json", "w")
-        f.write(json.dumps([]))
-        f.close()
-        f = open("./projects/" + project_name + "/inputs_found.json", "w")
-        f.write(json.dumps([]))
-        f.close()
+
+        for d in project_dirs: # Creating project directories
+            os.mkdir("./projects/" + project_name + "/" + d)
+
+        for f in project_files: # Creating project files
+            with open("./projects/" + project_name + "/" + f['file_name'], "w") as f_:
+                f_.write(json.dumps(f['content']))
         
+        with open("./projects/" + project_name + "/settings.json", "w") as f_:
+            f_.write(json.dumps(settings))
+
+        init_settings(settings=settings, project_name=project_name)
+        init_origins_conf(settings=settings, project_name=project_name)
+        init_url_regex_patterns(project_name=project_name)
+
         print("[+] Project created {}".format(project_name))
     else:
         while True:
@@ -55,28 +109,23 @@ def create_project(project_name):
                     if p != project_name and os.path.exists("./projects/" + p) == False:
                         print("[*] Creating project ...")
                         os.mkdir("./projects/" + p)
-                        os.mkdir("./projects/" + p + "/requests_pickles")
-                        os.mkdir("./projects/" + p + "/origins")
-                        f = open("./projects/" + p + "/origins_conf.json", "w")
-                        f.write(json.dumps({}))
-                        f.close()
-                        f = open("./projects/" + p + "/just_one_no_more_patterns.txt", "w")
-                        f.write(json.dumps([]))
-                        f.close()
-                        f = open("./projects/" + project_name + "/err_reqs.json", "w")
-                        f.write(json.dumps([]))
-                        f.close()
-                        f = open("./projects/" + p + "/links_found.json", "w")
-                        f.write(json.dumps([]))
-                        f.close()
-                        f = open("./projects/" + project_name + "/forms_found.json", "w")
-                        f.write(json.dumps([]))
-                        f.close()
-                        f = open("./projects/" + project_name + "/inputs_found.json", "w")
-                        f.write(json.dumps([]))
-                        f.close()
-                        print("[+] Project created {}".format(p))
+
+
+                        for d in project_dirs: # Creating project directories
+                            os.mkdir("./projects/" + p + "/" + d)
+                        for f in project_files:
+                            with open("./projects/" + p + "/" + f['file_name'], "w") as f_:
+                                f_.write(json.dumps(f['content']))
+
+                        with open("./projects/" + project_name + "/settings.json", "w") as f_:
+                            f_.write(json.dumps(settings))
+
+
                         project_name = p
+                        init_settings(settings=settings, project_name=project_name)
+                        init_origins_conf(settings=settings, project_name=project_name)
+                        init_url_regex_patterns(project_name=project_name)
+                        print("[+] Project created {}".format(p))
                         break
                     else:
                         print("[*] Enter a new name please ...")
@@ -85,99 +134,48 @@ def create_project(project_name):
                 delete_folder("./projects/" + project_name)
                 print("[*] Creating project ...")
                 os.mkdir("./projects/" + project_name)
-                os.mkdir("./projects/" + project_name + "/requests_pickles")
-                os.mkdir("./projects/" + project_name + "/origins")
-                f = open("./projects/" + project_name + "/origins_conf.json", "w")
-                f.write(json.dumps({}))
-                f.close()
-                f = open("./projects/" + project_name + "/just_one_no_more_patterns.txt", "w")
-                f.write(json.dumps([]))
-                f.close()
-                f = open("./projects/" + project_name + "/err_reqs.json", "w")
-                f.write(json.dumps([]))
-                f.close()
-                f = open("./projects/" + project_name + "/links_found.json", "w")
-                f.write(json.dumps([]))
-                f.close()
-                f = open("./projects/" + project_name + "/forms_found.json", "w")
-                f.write(json.dumps([]))
-                f.close()
-                f = open("./projects/" + project_name + "/inputs_found.json", "w")
-                f.write(json.dumps([]))
-                f.close()
+                for d in project_dirs: # Creating project directories
+                    os.mkdir("./projects/" + project_name + "/" + d)
+                for f in project_files:
+                    with open("./projects/" + project_name + "/" + f['file_name'], "w") as f_:
+                        f_.write(json.dumps(f['content']))
+        
+                with open("./projects/" + project_name + "/settings.json", "w") as f_:
+                    f_.write(json.dumps(settings))
+
+                init_settings(settings=settings, project_name=project_name)
+                init_origins_conf(settings=settings, project_name=project_name)
+                init_url_regex_patterns(project_name=project_name)
+
                 print("[+] Project created {}".format(project_name))
                 break
             elif q == "C" or q == "c":
                 print("[*] Ok, Continue the last project .")
                 print("[*] Checking for last project files and folders ...")
+
                 if os.path.exists("./projects/" + project_name): print("[+] Project folder exists .") 
                 else: 
                     print("[-] Project structure is corupted .")
                     sys.exit(0)
-                if os.path.exists("./projects/" + project_name + "/origins"): print("[+] {}/origins folder exists .".format(project_name))
-                else:
-                    print("[-] {}/origins does not exist, Project is corrupted .")
-                    sys.exit(0)
-                if os.path.exists("./projects/" + project_name + "/requests_pickles"): print("[+] ./projects/" + project_name + "/requests_pickles folder exists .")
-                else:
-                    print("[-] ./projects/" + project_name + "/requests_pickles does not exist, Project is corrupted .")
-                    sys.exit(0)
-                if os.path.exists("./projects/" + project_name + "/origins_conf.json"): print("[+] ./projects/" + project_name + "/origins_conf.json file exists .")
-                else:
-                    print("[-] ./projects/" + project_name + "/origins_conf.json does not exist, project is corrupted .")
-                    sys.exit(0)
-                if os.path.exists("./projects/" + project_name + "/just_one_no_more_patterns.txt"): print("[+] ./projects/" + project_name + "/just_one_no_more_patterns.txt exists .")
-                else:
-                    print("[-] ./projects/" + project_name + "/just_one_no_more_patterns.txt does not exist . Project is corrupted .")
-                    sys.exit(0)
-                if os.path.exists("[+] ./projects/" + project_name + "/err_reqs.json"): print("./projects/" + project_name + "/err_reqs.json exists .")
-                else:
-                    print("[-] ./projects/" + project_name + "/err_reqs.json does not exists . Project is corrupted .")
-                    sys.exit(0)
-                if os.path.exists("./projects/" + project_name + "/links_found.json"): print("[+]./projects/" + project_name + "/links_found.json exists .")
-                else:
-                    print("[-] ./projects/" + project_name + "/links_found.json does not exist . Project is corrupted .")
-                    sys.exit(0)                
-                if os.path.exists("./projects/" + project_name + "/forms_found.json"): print("[+] ./projects/" + project_name + "/forms_found.json file exists .")
-                else:
-                    print("[-] ./projects/" + project_name + "/forms_found.json does not exist .")
-                    sys.exit(0)
-                if os.path.exists("./projects/" + project_name + "/inputs_found.json"): print("[+] ./projects/" + project_name + "/inputs_found.json file exists .")
-                else:
-                    print("[-] ./projects/" + project_name + "/inputs_found.json does not exist .")
-                    sys.exit(0)
+
+                for d in project_dirs: # checking project directories
+                    if os.path.exists("./projects/" + project_name + "/" + d): print("[+] {}/{} folder exists .".format(project_name, d))
+                    else:
+                        print("[-] {}/{} does not exist, Project is corrupted .".format(project_name, d))
+                        sys.exit(0)
+
+
+                for f in project_files:
+                    if os.path.exists("./projects/" + project_name + "/" + f["file_name"]): print("[+] ./projects/" + project_name + "/" + f['file_name'] + " file exists .")
+                    else:
+                        print("[-] ./projects/" + project_name + "/" + f['file_name'] + "  does not exist .")
+                        sys.exit(0)
                 break
             else:
                 continue
             break
     
-    with open("./projects/" + project_name + "/just_one_no_more_patterns.txt", "w") as f_:
-        patterns = []
-        while True:
-            pattern = input("If there is any pattern of URL that you want to crawl once, please write it here as regex: [Blank to pass] ")
-            if pattern == "":
-                break
-
-            error = ""
-            while True:
-                if error != "":
-                    example = input(error + " - Enter an example for your regex pattern : [Enter to leave] ")
-                else:
-                    example = input("Enter an example for your regex pattern : [Enter to leave] ")
-                if example == "":
-                    break
-                try:
-                    re.search(pattern, example).string
-                    break
-                except AttributeError:
-                    error = "[Not match]"
-                    continue
-            patterns.append({
-                'pattern': pattern,
-                'example': example
-            })
-        f_.write(json.dumps(patterns))
-        
+    
 
 def is_file(name):
     try:
@@ -188,12 +186,27 @@ def is_file(name):
         return False
     except:
         return False
-    
 
 def add_link(links, link):
-    if len([x for x in links if urlparse(url=link).scheme + "://" + urlparse(url=link).netloc + urlparse(url=link).path + urlparse(url=link).params + urlparse(url=link).query in x['link']]) == 0:
+    if len([x for x in links if x['link'] == link]) == 0:
+        links.append({
+            "link": link,
+            "checked": 0
+        })
+    elif len([x for x in links if urlparse(url=link).scheme + "://" + urlparse(url=link).netloc + urlparse(url=link).path + urlparse(url=link).params + urlparse(url=link).query in x['link']]) == 0:
         links.append({
             "link": link,
             "checked": 0
         })
     return links
+
+def load_files(project_name, url):
+    """
+        Load files from project folder .
+    """
+    files_dict = {}
+    for f in project_files:
+        with open("./projects/" + project_name + "/" + f['file_name'], "r") as f_:
+            files_dict[f['file_name'].split(".")[0]] = (json.loads(f_.read()))
+
+    return files_dict

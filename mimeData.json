@@ -1,5 +1,23 @@
 [
-  
+  {
+    "name": "application/x-cdf",
+    "description": "",
+    "links": {
+      "deprecates": [],
+      "relatedTo": [],
+      "parentOf": [],
+      "alternativeTo": []
+    },
+    "fileTypes": [
+      ""
+    ],
+    "furtherReading": [],
+    "notices": {
+      "hasNoOfficial": false,
+      "communityContributed": false,
+      "popularUsage": null
+    }
+  },
   {
     "name": "application/x-httpd-php",
     "description": "",

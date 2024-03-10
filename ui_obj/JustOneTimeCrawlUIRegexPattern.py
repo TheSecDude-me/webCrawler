@@ -12,7 +12,7 @@ class JustOneTimeCrawlUI(QtWidgets.QMainWindow, JustOneTimeCrawlUIRegexPattern):
         
         self.setupUi(self)
 
-        with open("projects/" + self.project_name + "/just_one_no_more_patterns.txt", "r") as f_:
+        with open("projects/" + self.project_name + "/url_regex_patterns.json", "r") as f_:
             try:
                 self.patterns = json.loads(f_.read())
             except:
@@ -40,7 +40,7 @@ class JustOneTimeCrawlUI(QtWidgets.QMainWindow, JustOneTimeCrawlUIRegexPattern):
         self.patterns_tableWidget.removeRow(self.patterns_tableWidget.currentRow())
     def save(self):
         row = 0
-        with open("projects/" + self.project_name + "/just_one_no_more_patterns.txt", "w") as f_:
+        with open("projects/" + self.project_name + "/url_regex_patterns.json", "w") as f_:
             patterns = []
             while row < self.patterns_tableWidget.rowCount():
                 if self.patterns_tableWidget.item(row, 0).text() == "" or self.patterns_tableWidget.item(row, 1).text() == "":

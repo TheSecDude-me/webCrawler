@@ -29,9 +29,49 @@ schemes = [
 ]
 
 files = [
-    "image", "font", "audio", "video"
+    "image", "font", "audio", "video", "javascript", "css"
 ]
 
 search_for_tags = [
     'form', 'input', 'textarea', 'iframe'
+]
+
+
+project_files = [
+    {
+        "file_name": "origins_conf.json",
+        "content": {
+            "allowed": [],
+            "disallowed": []
+        }
+    },
+    {
+        "file_name": "url_regex_patterns.json",
+        "content": []
+    },
+    {
+        "file_name": "err_reqs.json",
+        "content": []
+    },
+    {
+        "file_name": "links_found.json",
+        "content": []
+    },
+    {
+        "file_name": "forms_found.json",
+        "content": []
+    },
+    {
+        "file_name": "inputs_found.json",
+        "content": []
+    },
+    {
+        "file_name": "settings.json",
+        "content": {}
+    }
+
+]
+
+project_dirs = [
+    "origins", "requests_pickles"
 ]

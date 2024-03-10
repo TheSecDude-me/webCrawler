@@ -1,7 +1,5 @@
 Todo :
-    1. Search for links in css files too
     2. Save request that has parameters
-    3. Make saving found tags dynamic
     4. Find iframe tags too
-    5. Add timeout time to driver requests
-    6. make settings.py for every project seperately base on main settings.py
+
+    7. Before "[*] Enter a string for origin contains:" ask for type of origins detection
