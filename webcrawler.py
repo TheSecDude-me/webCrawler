@@ -47,8 +47,6 @@ create_project(project_name, settings)
 
 # links, err_reqs, forms, inputs, origins_conf, url_regex_patterns, settings = load_files(project_name, url)
 locals().update(load_files(project_name, url))
-# origins_conf, url_regex_patterns, err_reqs, links_found, forms_found, inputs_found, settings = load_files(project_name, url)
-# print(origins_conf, url_regex_patterns, err_reqs, links_found, forms_found, inputs_found, settings)
 print("URL: {}".format(url))
 
 
