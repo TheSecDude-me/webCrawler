@@ -63,11 +63,6 @@ def init_url_regex_patterns(project_name):
                 f_.write(json.dumps(patterns))
     return url_regex_patterns
 
-
-
-
-
-
 def delete_folder(dst):
     pth = pathlib.Path(dst)
     for sub in pth.iterdir():
@@ -174,8 +169,6 @@ def create_project(project_name, settings):
             else:
                 continue
             break
-    
-    
 
 def is_file(name):
     try:
