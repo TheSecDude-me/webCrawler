@@ -13,7 +13,7 @@ class ProjectSettingsWindow(QtWidgets.QMainWindow, project_settings):
         super(ProjectSettingsWindow, self).__init__(*args, **kwargs)
         
         self.setupUi(self)
-        self.project_name = "divar"
+        self.project_name = "test"
 
         with open("projects/" + self.project_name + "/settings.json", "r") as f_:
             self.settings = json.loads(f_.read())
@@ -207,19 +207,15 @@ class ProjectSettingsWindow(QtWidgets.QMainWindow, project_settings):
         self.settings['url'] = self.url_lineEdit.text()
         self.settings['reqs_timeout'] = int(self.reqs_timeout_spinBox.text())
 
-        if self.origins_compare_radioButton.isChecked():
-            self.settings["origin_compare"] = self.origins_compare_radioButton.isChecked()
-            self.settings["origin_compare_ratio"] = float(self.origins_compare_ratio_label.text())
-            self.settings["origin_contains"] = self.origins_contain_radioButton.isChecked()
-            self.settings["origin_contains_list"] = []
+
+        self.settings["origin_compare"] = self.origins_compare_radioButton.isChecked()
+        self.settings["origin_compare_ratio"] = float(self.origins_compare_ratio_label.text())
+        self.settings["origin_contains"] = self.origins_contain_radioButton.isChecked()
+        self.settings["origin_contains_list"] = [y.replace(" ", "") for y in self.origins_contain_lineEdit.text().split(",") if y != ""]
         if self.origins_contain_radioButton.isChecked():
             if self.origins_contain_lineEdit.text() == "":
                 QMessageBox.critical(self, "Error", "Please enter correct value in origins contain text box .")
                 return
-            self.settings["origin_compare"] = self.origins_compare_radioButton.isChecked()
-            self.settings["origin_compare_ratio"] = 0.0
-            self.settings["origin_contains"] = self.origins_contain_radioButton.isChecked()
-            self.settings["origin_contains_list"] = [y.replace(" ", "") for y in self.origins_contain_lineEdit.text().split(",") if y != ""]
         
         with open("projects/" + self.project_name + "/settings.json", "w") as f_:
             f_.write(json.dumps(self.settings))
@@ -229,6 +225,9 @@ class ProjectSettingsWindow(QtWidgets.QMainWindow, project_settings):
             origins_conf["allowed"].append(urlparse(self.settings['url']).scheme + "://" + urlparse(self.settings['url']).netloc + "/")
             with open("./projects/" + self.project_name + "/origins_conf.json", "w") as f_:
                     f_.write(json.dumps(origins_conf))  
+        
+        if self.settings['origins']['allowed'].count(urlparse(self.settings['url']).scheme + "://" + urlparse(self.settings['url']).netloc + "/") == 0:
+            self.settings['origins']['allowed'].append(urlparse(self.settings['url']).scheme + "://" + urlparse(self.settings['url']).netloc + "/")
 
         # # Regex patterns
         if self.patterns_tableWidget.rowCount() != 0:

@@ -40,11 +40,28 @@ def create_new_project_next(project_name):
                     "origin_contains": False,
                     "origin_contains_list": [],
 
-                    "bad_links": [],
-                    "link_xpaths": [],
-                    "schemes": [],
-                    "files": [],
-                    "search_for_tags": [],
+                    "origins": {
+                        "allowed": [],
+                        "disallowed": []
+                    },
+
+                    "bad_links": ["resource://", "chrome://", "data:image", "wss://"],
+                    "link_xpaths": [{
+                            "xpath": "//*[@href]",
+                            "attr": "href"
+                        },
+                        {
+                            "xpath": "//*[@src]",
+                            "attr": "src"
+                        },
+                        {
+                            "xpath": "//*[@action]",
+                            "attr": "action"
+                        }
+                    ],
+                    "schemes": ["http://", "https://"],
+                    "files": ["image", "font", "audio", "video", "javascript", "css"],
+                    "search_for_tags": ['form', 'input', 'textarea', 'iframe'],
                     "url_regex_patterns": [],
 
                     "proxy": {
