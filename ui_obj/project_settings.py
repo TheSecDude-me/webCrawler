@@ -217,14 +217,6 @@ class ProjectSettingsWindow(QtWidgets.QMainWindow, project_settings):
                 QMessageBox.critical(self, "Error", "Please enter correct value in origins contain text box .")
                 return
         
-        with open("projects/" + self.project_name + "/settings.json", "w") as f_:
-            f_.write(json.dumps(self.settings))
-
-        with open("projects/" + self.project_name + "/origins_conf.json", "r") as f_:
-            origins_conf = json.loads(f_.read())
-            origins_conf["allowed"].append(urlparse(self.settings['url']).scheme + "://" + urlparse(self.settings['url']).netloc + "/")
-            with open("./projects/" + self.project_name + "/origins_conf.json", "w") as f_:
-                    f_.write(json.dumps(origins_conf))  
         
         if self.settings['origins']['allowed'].count(urlparse(self.settings['url']).scheme + "://" + urlparse(self.settings['url']).netloc + "/") == 0:
             self.settings['origins']['allowed'].append(urlparse(self.settings['url']).scheme + "://" + urlparse(self.settings['url']).netloc + "/")

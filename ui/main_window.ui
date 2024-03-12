@@ -27,12 +27,12 @@
      <string>Start</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label">
+   <widget class="QLabel" name="current_url_label">
     <property name="geometry">
      <rect>
       <x>20</x>
       <y>10</y>
-      <width>81</width>
+      <width>851</width>
       <height>21</height>
      </rect>
     </property>
@@ -55,13 +55,13 @@
     <property name="flat">
      <bool>true</bool>
     </property>
-    <widget class="QTableWidget" name="tableWidget">
+    <widget class="QTableWidget" name="links_tableWidget">
      <property name="geometry">
       <rect>
        <x>10</x>
        <y>20</y>
        <width>1011</width>
-       <height>201</height>
+       <height>211</height>
       </rect>
      </property>
      <attribute name="verticalHeaderStretchLastSection">
@@ -83,6 +83,22 @@
       </property>
      </column>
     </widget>
+   </widget>
+   <widget class="QLabel" name="counter_label">
+    <property name="geometry">
+     <rect>
+      <x>890</x>
+      <y>10</y>
+      <width>61</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>0/0</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
