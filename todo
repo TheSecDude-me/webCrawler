@@ -3,3 +3,5 @@ Todo :
     4. Find iframe tags too
 
     7. Before "[*] Enter a string for origin contains:" ask for type of origins detection
+
+    8. xpath table should has two column not one in ui_obj\project_settings.py

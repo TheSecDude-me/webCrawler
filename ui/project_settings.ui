@@ -6,952 +6,1073 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1014</width>
-    <height>619</height>
+    <width>594</width>
+    <height>635</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Project initial settings</string>
   </property>
-  <widget class="QGroupBox" name="groupBox">
+  <widget class="QTabWidget" name="tabWidget">
    <property name="geometry">
     <rect>
-     <x>10</x>
-     <y>10</y>
-     <width>541</width>
-     <height>61</height>
+     <x>0</x>
+     <y>0</y>
+     <width>601</width>
+     <height>641</height>
     </rect>
    </property>
-   <property name="title">
-    <string>Settings</string>
+   <property name="currentIndex">
+    <number>1</number>
    </property>
-   <widget class="QLineEdit" name="url_lineEdit">
-    <property name="geometry">
-     <rect>
-      <x>40</x>
-      <y>20</y>
-      <width>491</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="placeholderText">
-     <string>Enter your target URL here ...</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>20</y>
-      <width>47</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>URL :</string>
-    </property>
-   </widget>
-  </widget>
-  <widget class="QGroupBox" name="groupBox_2">
-   <property name="geometry">
-    <rect>
-     <x>10</x>
-     <y>170</y>
-     <width>541</width>
-     <height>121</height>
-    </rect>
-   </property>
-   <property name="title">
-    <string>Origins settings</string>
-   </property>
-   <widget class="QRadioButton" name="origins_compare_radioButton">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>20</y>
-      <width>161</width>
-      <height>17</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Compare origins together</string>
-    </property>
-    <property name="checked">
-     <bool>true</bool>
-    </property>
-   </widget>
-   <widget class="QRadioButton" name="origins_contain_radioButton">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>80</y>
-      <width>101</width>
-      <height>17</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Origins contain</string>
-    </property>
-   </widget>
-   <widget class="QSlider" name="origins_compare_ratio_horizontalSlider">
-    <property name="geometry">
-     <rect>
-      <x>190</x>
-      <y>20</y>
-      <width>281</width>
-      <height>22</height>
-     </rect>
-    </property>
-    <property name="maximum">
-     <number>10</number>
-    </property>
-    <property name="value">
-     <number>6</number>
-    </property>
-    <property name="orientation">
-     <enum>Qt::Horizontal</enum>
-    </property>
-   </widget>
-   <widget class="QLabel" name="origins_compare_ratio_label">
-    <property name="geometry">
-     <rect>
-      <x>480</x>
-      <y>20</y>
-      <width>21</width>
-      <height>16</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>0.6</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="origins_compare_ratio_help_label">
-    <property name="geometry">
-     <rect>
-      <x>510</x>
-      <y>20</y>
-      <width>21</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="cursor">
-     <cursorShape>PointingHandCursor</cursorShape>
-    </property>
-    <property name="toolTip">
-     <string>What is this option ?</string>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">font-size: 18px; color: blue; border: 1px solid black; border-radius: 10px</string>
-    </property>
-    <property name="text">
-     <string>?</string>
-    </property>
-   </widget>
-   <widget class="Line" name="line">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>50</y>
-      <width>521</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="orientation">
-     <enum>Qt::Horizontal</enum>
-    </property>
-   </widget>
-   <widget class="QLabel" name="origins_contain_help_label">
-    <property name="geometry">
-     <rect>
-      <x>510</x>
-      <y>80</y>
-      <width>21</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="cursor">
-     <cursorShape>PointingHandCursor</cursorShape>
-    </property>
-    <property name="toolTip">
-     <string>What is this option ?</string>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">font-size: 18px; color: blue; border: 1px solid black; border-radius: 10px</string>
-    </property>
-    <property name="text">
-     <string>?</string>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="origins_contain_lineEdit">
-    <property name="geometry">
-     <rect>
-      <x>130</x>
-      <y>80</y>
-      <width>371</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="placeholderText">
-     <string>Separate them with , like blog,web,site,...</string>
-    </property>
-   </widget>
-  </widget>
-  <widget class="QGroupBox" name="groupBox_3">
-   <property name="geometry">
-    <rect>
-     <x>10</x>
-     <y>300</y>
-     <width>541</width>
-     <height>251</height>
-    </rect>
-   </property>
-   <property name="title">
-    <string>Regex patterns</string>
-   </property>
-   <widget class="QPushButton" name="add_pattern_pushButton">
-    <property name="geometry">
-     <rect>
-      <x>470</x>
-      <y>220</y>
-      <width>31</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">font-weight: bold;</string>
-    </property>
-    <property name="text">
-     <string>+</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="remove_pattern_pushButton">
-    <property name="geometry">
-     <rect>
-      <x>440</x>
-      <y>220</y>
-      <width>31</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">font-weight: bold;</string>
-    </property>
-    <property name="text">
-     <string>-</string>
-    </property>
-   </widget>
-   <widget class="QTableWidget" name="patterns_tableWidget">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>20</y>
-      <width>521</width>
-      <height>192</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true"/>
-    </property>
-    <attribute name="horizontalHeaderCascadingSectionResizes">
-     <bool>false</bool>
+   <widget class="QWidget" name="tab">
+    <attribute name="title">
+     <string>Main Settings</string>
     </attribute>
-    <attribute name="verticalHeaderCascadingSectionResizes">
-     <bool>false</bool>
-    </attribute>
-    <column>
-     <property name="text">
-      <string>Regex</string>
+    <widget class="QGroupBox" name="groupBox">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>10</y>
+       <width>571</width>
+       <height>61</height>
+      </rect>
      </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>Example</string>
+     <property name="title">
+      <string>Settings</string>
      </property>
-    </column>
-   </widget>
-   <widget class="QLabel" name="regex_pattern_help_label">
-    <property name="geometry">
-     <rect>
-      <x>510</x>
-      <y>220</y>
-      <width>21</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="cursor">
-     <cursorShape>PointingHandCursor</cursorShape>
-    </property>
-    <property name="toolTip">
-     <string>What is this option ?</string>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">font-size: 18px; color: blue; border: 1px solid black; border-radius: 10px</string>
-    </property>
-    <property name="text">
-     <string>?</string>
-    </property>
-   </widget>
-  </widget>
-  <widget class="QGroupBox" name="groupBox_4">
-   <property name="geometry">
-    <rect>
-     <x>10</x>
-     <y>80</y>
-     <width>541</width>
-     <height>81</height>
-    </rect>
-   </property>
-   <property name="title">
-    <string>Timing Settings (seconds)</string>
-   </property>
-   <widget class="QLabel" name="label_3">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>20</y>
-      <width>81</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Request delay :</string>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="req_delay_lineEdit">
-    <property name="geometry">
-     <rect>
-      <x>90</x>
-      <y>20</y>
-      <width>41</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>1</string>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignCenter</set>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="rnd_req_delay_to_lineEdit">
-    <property name="enabled">
-     <bool>false</bool>
-    </property>
-    <property name="geometry">
-     <rect>
-      <x>480</x>
-      <y>20</y>
-      <width>41</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>99</string>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignCenter</set>
-    </property>
-   </widget>
-   <widget class="QCheckBox" name="random_reqs_delay_checkBox">
-    <property name="geometry">
-     <rect>
-      <x>220</x>
-      <y>20</y>
-      <width>191</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Random request delay,  From :</string>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="rnd_req_delay_from_lineEdit">
-    <property name="enabled">
-     <bool>false</bool>
-    </property>
-    <property name="geometry">
-     <rect>
-      <x>400</x>
-      <y>20</y>
-      <width>41</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>1</string>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignCenter</set>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_4">
-    <property name="geometry">
-     <rect>
-      <x>450</x>
-      <y>20</y>
-      <width>31</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>To :</string>
-    </property>
-   </widget>
-   <widget class="QSpinBox" name="reqs_timeout_spinBox">
-    <property name="geometry">
-     <rect>
-      <x>110</x>
-      <y>50</y>
-      <width>42</width>
-      <height>22</height>
-     </rect>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignCenter</set>
-    </property>
-    <property name="minimum">
-     <number>1</number>
-    </property>
-    <property name="value">
-     <number>25</number>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_2">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>50</y>
-      <width>101</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Requests timeout :</string>
-    </property>
-   </widget>
-  </widget>
-  <widget class="QGroupBox" name="groupBox_6">
-   <property name="geometry">
-    <rect>
-     <x>590</x>
-     <y>10</y>
-     <width>411</width>
-     <height>121</height>
-    </rect>
-   </property>
-   <property name="title">
-    <string>Bad links</string>
-   </property>
-   <property name="flat">
-    <bool>true</bool>
-   </property>
-   <widget class="QTableWidget" name="bad_links_tableWidget">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>20</y>
-      <width>361</width>
-      <height>81</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true"/>
-    </property>
-    <attribute name="horizontalHeaderCascadingSectionResizes">
-     <bool>false</bool>
-    </attribute>
-    <attribute name="verticalHeaderCascadingSectionResizes">
-     <bool>false</bool>
-    </attribute>
-    <column>
-     <property name="text">
-      <string>Pattern</string>
+     <widget class="QLineEdit" name="url_lineEdit">
+      <property name="geometry">
+       <rect>
+        <x>40</x>
+        <y>20</y>
+        <width>521</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="placeholderText">
+       <string>Enter your target URL here ...</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>20</y>
+        <width>47</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>URL :</string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QGroupBox" name="groupBox_4">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>80</y>
+       <width>571</width>
+       <height>101</height>
+      </rect>
      </property>
-    </column>
-   </widget>
-   <widget class="QPushButton" name="add_bad_link_pushButton">
-    <property name="geometry">
-     <rect>
-      <x>380</x>
-      <y>20</y>
-      <width>21</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">font-weight: bold;</string>
-    </property>
-    <property name="text">
-     <string>+</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="remove_bad_link_pushButton">
-    <property name="geometry">
-     <rect>
-      <x>380</x>
-      <y>40</y>
-      <width>21</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">font-weight: bold;</string>
-    </property>
-    <property name="text">
-     <string>-</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="bad_links_help_label">
-    <property name="geometry">
-     <rect>
-      <x>380</x>
-      <y>70</y>
-      <width>21</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="cursor">
-     <cursorShape>PointingHandCursor</cursorShape>
-    </property>
-    <property name="toolTip">
-     <string>What is this option ?</string>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">font-size: 18px; color: blue; border: 1px solid black; border-radius: 10px</string>
-    </property>
-    <property name="text">
-     <string>?</string>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignCenter</set>
-    </property>
-   </widget>
-  </widget>
-  <widget class="QGroupBox" name="groupBox_7">
-   <property name="geometry">
-    <rect>
-     <x>590</x>
-     <y>130</y>
-     <width>411</width>
-     <height>121</height>
-    </rect>
-   </property>
-   <property name="title">
-    <string>Links XPATH</string>
-   </property>
-   <property name="flat">
-    <bool>true</bool>
-   </property>
-   <widget class="QTableWidget" name="links_xpath_tableWidget">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>20</y>
-      <width>361</width>
-      <height>81</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true"/>
-    </property>
-    <attribute name="horizontalHeaderCascadingSectionResizes">
-     <bool>false</bool>
-    </attribute>
-    <attribute name="verticalHeaderCascadingSectionResizes">
-     <bool>false</bool>
-    </attribute>
-    <column>
-     <property name="text">
-      <string>XPATH</string>
+     <property name="title">
+      <string>Timing Settings (seconds)</string>
      </property>
-    </column>
-   </widget>
-   <widget class="QPushButton" name="add_link_xpath_pushButton">
-    <property name="geometry">
-     <rect>
-      <x>380</x>
-      <y>20</y>
-      <width>21</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">font-weight: bold;</string>
-    </property>
-    <property name="text">
-     <string>+</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="remove_link_xpath_pushButton">
-    <property name="geometry">
-     <rect>
-      <x>380</x>
-      <y>40</y>
-      <width>21</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">font-weight: bold;</string>
-    </property>
-    <property name="text">
-     <string>-</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="links_xpath_help_label">
-    <property name="geometry">
-     <rect>
-      <x>380</x>
-      <y>70</y>
-      <width>21</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="cursor">
-     <cursorShape>PointingHandCursor</cursorShape>
-    </property>
-    <property name="toolTip">
-     <string>What is this option ?</string>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">font-size: 18px; color: blue; border: 1px solid black; border-radius: 10px</string>
-    </property>
-    <property name="text">
-     <string>?</string>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignCenter</set>
-    </property>
-   </widget>
-  </widget>
-  <widget class="QGroupBox" name="groupBox_8">
-   <property name="geometry">
-    <rect>
-     <x>590</x>
-     <y>250</y>
-     <width>411</width>
-     <height>121</height>
-    </rect>
-   </property>
-   <property name="title">
-    <string>Schemes</string>
-   </property>
-   <property name="flat">
-    <bool>true</bool>
-   </property>
-   <widget class="QTableWidget" name="schemes_tableWidget">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>20</y>
-      <width>361</width>
-      <height>81</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true"/>
-    </property>
-    <attribute name="horizontalHeaderCascadingSectionResizes">
-     <bool>false</bool>
-    </attribute>
-    <attribute name="verticalHeaderCascadingSectionResizes">
-     <bool>false</bool>
-    </attribute>
-    <column>
-     <property name="text">
-      <string>Scheme</string>
+     <widget class="QGroupBox" name="groupBox_5">
+      <property name="geometry">
+       <rect>
+        <x>390</x>
+        <y>20</y>
+        <width>171</width>
+        <height>71</height>
+       </rect>
+      </property>
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="baseSize">
+       <size>
+        <width>0</width>
+        <height>0</height>
+       </size>
+      </property>
+      <property name="title">
+       <string/>
+      </property>
+      <widget class="QLabel" name="label_2">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>9</y>
+         <width>101</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Requests timeout :</string>
+       </property>
+      </widget>
+      <widget class="QSpinBox" name="reqs_timeout_spinBox">
+       <property name="geometry">
+        <rect>
+         <x>120</x>
+         <y>10</y>
+         <width>42</width>
+         <height>22</height>
+        </rect>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+       <property name="minimum">
+        <number>1</number>
+       </property>
+       <property name="value">
+        <number>25</number>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QGroupBox" name="groupBox_11">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>20</y>
+        <width>371</width>
+        <height>71</height>
+       </rect>
+      </property>
+      <property name="title">
+       <string/>
+      </property>
+      <widget class="QLineEdit" name="rnd_req_delay_to_lineEdit">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
+       <property name="geometry">
+        <rect>
+         <x>270</x>
+         <y>40</y>
+         <width>41</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>99</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_4">
+       <property name="geometry">
+        <rect>
+         <x>240</x>
+         <y>40</y>
+         <width>31</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>To :</string>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="rnd_req_delay_from_lineEdit">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
+       <property name="geometry">
+        <rect>
+         <x>190</x>
+         <y>40</y>
+         <width>41</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>1</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="req_delay_lineEdit">
+       <property name="geometry">
+        <rect>
+         <x>90</x>
+         <y>10</y>
+         <width>41</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>1</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_3">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>10</y>
+         <width>81</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Request delay :</string>
+       </property>
+      </widget>
+      <widget class="QCheckBox" name="random_reqs_delay_checkBox">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>40</y>
+         <width>191</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Random request delay,  From :</string>
+       </property>
+      </widget>
+     </widget>
+    </widget>
+    <widget class="QGroupBox" name="groupBox_2">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>190</y>
+       <width>561</width>
+       <height>121</height>
+      </rect>
      </property>
-    </column>
-   </widget>
-   <widget class="QPushButton" name="add_scheme_pushButton">
-    <property name="geometry">
-     <rect>
-      <x>380</x>
-      <y>20</y>
-      <width>21</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">font-weight: bold;</string>
-    </property>
-    <property name="text">
-     <string>+</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="remove_scheme_pushButton">
-    <property name="geometry">
-     <rect>
-      <x>380</x>
-      <y>40</y>
-      <width>21</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">font-weight: bold;</string>
-    </property>
-    <property name="text">
-     <string>-</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="schemes_help_label">
-    <property name="geometry">
-     <rect>
-      <x>380</x>
-      <y>70</y>
-      <width>21</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="cursor">
-     <cursorShape>PointingHandCursor</cursorShape>
-    </property>
-    <property name="toolTip">
-     <string>What is this option ?</string>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">font-size: 18px; color: blue; border: 1px solid black; border-radius: 10px</string>
-    </property>
-    <property name="text">
-     <string>?</string>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignCenter</set>
-    </property>
-   </widget>
-  </widget>
-  <widget class="QGroupBox" name="groupBox_9">
-   <property name="geometry">
-    <rect>
-     <x>590</x>
-     <y>370</y>
-     <width>411</width>
-     <height>121</height>
-    </rect>
-   </property>
-   <property name="title">
-    <string>HTML elements to search for</string>
-   </property>
-   <property name="flat">
-    <bool>true</bool>
-   </property>
-   <widget class="QTableWidget" name="tags_tableWidget">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>20</y>
-      <width>361</width>
-      <height>81</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true"/>
-    </property>
-    <attribute name="horizontalHeaderCascadingSectionResizes">
-     <bool>false</bool>
-    </attribute>
-    <attribute name="verticalHeaderCascadingSectionResizes">
-     <bool>false</bool>
-    </attribute>
-    <column>
-     <property name="text">
-      <string>Tag</string>
+     <property name="title">
+      <string>Origins settings</string>
      </property>
-    </column>
-   </widget>
-   <widget class="QPushButton" name="add_tag_pushButton">
-    <property name="geometry">
-     <rect>
-      <x>380</x>
-      <y>20</y>
-      <width>21</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">font-weight: bold;</string>
-    </property>
-    <property name="text">
-     <string>+</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="remove_tag_pushButton">
-    <property name="geometry">
-     <rect>
-      <x>380</x>
-      <y>40</y>
-      <width>21</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">font-weight: bold;</string>
-    </property>
-    <property name="text">
-     <string>-</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="tags_help_label">
-    <property name="geometry">
-     <rect>
-      <x>380</x>
-      <y>70</y>
-      <width>21</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="cursor">
-     <cursorShape>PointingHandCursor</cursorShape>
-    </property>
-    <property name="toolTip">
-     <string>What is this option ?</string>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">font-size: 18px; color: blue; border: 1px solid black; border-radius: 10px</string>
-    </property>
-    <property name="text">
-     <string>?</string>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignCenter</set>
-    </property>
-   </widget>
-  </widget>
-  <widget class="QPushButton" name="next_pushButton">
-   <property name="geometry">
-    <rect>
-     <x>284</x>
-     <y>560</y>
-     <width>271</width>
-     <height>41</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Next</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="cancel_pushButton">
-   <property name="geometry">
-    <rect>
-     <x>10</x>
-     <y>560</y>
-     <width>271</width>
-     <height>41</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Cancel</string>
-   </property>
-  </widget>
-  <widget class="Line" name="line_2">
-   <property name="geometry">
-    <rect>
-     <x>560</x>
-     <y>10</y>
-     <width>20</width>
-     <height>591</height>
-    </rect>
-   </property>
-   <property name="orientation">
-    <enum>Qt::Vertical</enum>
-   </property>
-  </widget>
-  <widget class="QGroupBox" name="groupBox_10">
-   <property name="geometry">
-    <rect>
-     <x>590</x>
-     <y>490</y>
-     <width>411</width>
-     <height>121</height>
-    </rect>
-   </property>
-   <property name="title">
-    <string>Mimes to recognize as file</string>
-   </property>
-   <property name="flat">
-    <bool>true</bool>
-   </property>
-   <widget class="QTableWidget" name="files_tableWidget">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>20</y>
-      <width>361</width>
-      <height>81</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true"/>
-    </property>
-    <attribute name="horizontalHeaderCascadingSectionResizes">
-     <bool>false</bool>
-    </attribute>
-    <attribute name="verticalHeaderCascadingSectionResizes">
-     <bool>false</bool>
-    </attribute>
-    <column>
-     <property name="text">
-      <string>Mime</string>
+     <widget class="QRadioButton" name="origins_compare_radioButton">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>20</y>
+        <width>161</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Compare origins together</string>
+      </property>
+      <property name="checked">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="QRadioButton" name="origins_contain_radioButton">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>80</y>
+        <width>101</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Origins contain</string>
+      </property>
+     </widget>
+     <widget class="QSlider" name="origins_compare_ratio_horizontalSlider">
+      <property name="geometry">
+       <rect>
+        <x>190</x>
+        <y>20</y>
+        <width>301</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="maximum">
+       <number>10</number>
+      </property>
+      <property name="value">
+       <number>6</number>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+     <widget class="QLabel" name="origins_compare_ratio_label">
+      <property name="geometry">
+       <rect>
+        <x>500</x>
+        <y>20</y>
+        <width>21</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>0.6</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="origins_compare_ratio_help_label">
+      <property name="geometry">
+       <rect>
+        <x>530</x>
+        <y>20</y>
+        <width>21</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="cursor">
+       <cursorShape>PointingHandCursor</cursorShape>
+      </property>
+      <property name="toolTip">
+       <string>What is this option ?</string>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font-size: 18px; color: blue; border: 1px solid black; border-radius: 10px</string>
+      </property>
+      <property name="text">
+       <string>?</string>
+      </property>
+     </widget>
+     <widget class="Line" name="line">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>50</y>
+        <width>541</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+     <widget class="QLabel" name="origins_contain_help_label">
+      <property name="geometry">
+       <rect>
+        <x>530</x>
+        <y>80</y>
+        <width>21</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="cursor">
+       <cursorShape>PointingHandCursor</cursorShape>
+      </property>
+      <property name="toolTip">
+       <string>What is this option ?</string>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font-size: 18px; color: blue; border: 1px solid black; border-radius: 10px</string>
+      </property>
+      <property name="text">
+       <string>?</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="origins_contain_lineEdit">
+      <property name="geometry">
+       <rect>
+        <x>130</x>
+        <y>80</y>
+        <width>391</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="placeholderText">
+       <string>Separate them with , like blog,web,site,...</string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QGroupBox" name="groupBox_3">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>320</y>
+       <width>561</width>
+       <height>231</height>
+      </rect>
      </property>
-    </column>
+     <property name="title">
+      <string>Regex patterns</string>
+     </property>
+     <widget class="QPushButton" name="add_pattern_pushButton">
+      <property name="geometry">
+       <rect>
+        <x>490</x>
+        <y>200</y>
+        <width>31</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font-weight: bold;</string>
+      </property>
+      <property name="text">
+       <string>+</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="remove_pattern_pushButton">
+      <property name="geometry">
+       <rect>
+        <x>460</x>
+        <y>200</y>
+        <width>31</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font-weight: bold;</string>
+      </property>
+      <property name="text">
+       <string>-</string>
+      </property>
+     </widget>
+     <widget class="QTableWidget" name="patterns_tableWidget">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>20</y>
+        <width>541</width>
+        <height>171</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true"/>
+      </property>
+      <attribute name="horizontalHeaderCascadingSectionResizes">
+       <bool>false</bool>
+      </attribute>
+      <attribute name="verticalHeaderCascadingSectionResizes">
+       <bool>false</bool>
+      </attribute>
+      <column>
+       <property name="text">
+        <string>Regex</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Example</string>
+       </property>
+      </column>
+     </widget>
+     <widget class="QLabel" name="regex_pattern_help_label">
+      <property name="geometry">
+       <rect>
+        <x>530</x>
+        <y>200</y>
+        <width>21</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="cursor">
+       <cursorShape>PointingHandCursor</cursorShape>
+      </property>
+      <property name="toolTip">
+       <string>What is this option ?</string>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font-size: 18px; color: blue; border: 1px solid black; border-radius: 10px</string>
+      </property>
+      <property name="text">
+       <string>?</string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QPushButton" name="cancel_pushButton">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>560</y>
+       <width>271</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Cancel</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="next_pushButton">
+     <property name="geometry">
+      <rect>
+       <x>300</x>
+       <y>560</y>
+       <width>271</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Next</string>
+     </property>
+    </widget>
    </widget>
-   <widget class="QPushButton" name="add_file_pushButton">
-    <property name="geometry">
-     <rect>
-      <x>380</x>
-      <y>20</y>
-      <width>21</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">font-weight: bold;</string>
-    </property>
-    <property name="text">
-     <string>+</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="remove_file_pushButton">
-    <property name="geometry">
-     <rect>
-      <x>380</x>
-      <y>40</y>
-      <width>21</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">font-weight: bold;</string>
-    </property>
-    <property name="text">
-     <string>-</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="files_help_label">
-    <property name="geometry">
-     <rect>
-      <x>380</x>
-      <y>70</y>
-      <width>21</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="cursor">
-     <cursorShape>PointingHandCursor</cursorShape>
-    </property>
-    <property name="toolTip">
-     <string>What is this option ?</string>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">font-size: 18px; color: blue; border: 1px solid black; border-radius: 10px</string>
-    </property>
-    <property name="text">
-     <string>?</string>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignCenter</set>
-    </property>
+   <widget class="QWidget" name="tab_2">
+    <attribute name="title">
+     <string>More Settings</string>
+    </attribute>
+    <widget class="QGroupBox" name="groupBox_7">
+     <property name="geometry">
+      <rect>
+       <x>300</x>
+       <y>10</y>
+       <width>281</width>
+       <height>121</height>
+      </rect>
+     </property>
+     <property name="title">
+      <string>Links XPATH</string>
+     </property>
+     <property name="flat">
+      <bool>false</bool>
+     </property>
+     <widget class="QTableWidget" name="links_xpath_tableWidget">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>20</y>
+        <width>231</width>
+        <height>81</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true"/>
+      </property>
+      <attribute name="horizontalHeaderCascadingSectionResizes">
+       <bool>false</bool>
+      </attribute>
+      <attribute name="verticalHeaderCascadingSectionResizes">
+       <bool>false</bool>
+      </attribute>
+      <column>
+       <property name="text">
+        <string>XPATH</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Attribute Name</string>
+       </property>
+      </column>
+     </widget>
+     <widget class="QPushButton" name="add_link_xpath_pushButton">
+      <property name="geometry">
+       <rect>
+        <x>250</x>
+        <y>20</y>
+        <width>21</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font-weight: bold;</string>
+      </property>
+      <property name="text">
+       <string>+</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="remove_link_xpath_pushButton">
+      <property name="geometry">
+       <rect>
+        <x>250</x>
+        <y>40</y>
+        <width>21</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font-weight: bold;</string>
+      </property>
+      <property name="text">
+       <string>-</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="links_xpath_help_label">
+      <property name="geometry">
+       <rect>
+        <x>250</x>
+        <y>70</y>
+        <width>21</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="cursor">
+       <cursorShape>PointingHandCursor</cursorShape>
+      </property>
+      <property name="toolTip">
+       <string>What is this option ?</string>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font-size: 18px; color: blue; border: 1px solid black; border-radius: 10px</string>
+      </property>
+      <property name="text">
+       <string>?</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QGroupBox" name="groupBox_9">
+     <property name="geometry">
+      <rect>
+       <x>300</x>
+       <y>140</y>
+       <width>281</width>
+       <height>121</height>
+      </rect>
+     </property>
+     <property name="title">
+      <string>HTML elements to search for</string>
+     </property>
+     <property name="flat">
+      <bool>false</bool>
+     </property>
+     <widget class="QTableWidget" name="tags_tableWidget">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>20</y>
+        <width>231</width>
+        <height>81</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true"/>
+      </property>
+      <attribute name="horizontalHeaderCascadingSectionResizes">
+       <bool>false</bool>
+      </attribute>
+      <attribute name="verticalHeaderCascadingSectionResizes">
+       <bool>false</bool>
+      </attribute>
+      <column>
+       <property name="text">
+        <string>Tag</string>
+       </property>
+      </column>
+     </widget>
+     <widget class="QPushButton" name="add_tag_pushButton">
+      <property name="geometry">
+       <rect>
+        <x>250</x>
+        <y>20</y>
+        <width>21</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font-weight: bold;</string>
+      </property>
+      <property name="text">
+       <string>+</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="remove_tag_pushButton">
+      <property name="geometry">
+       <rect>
+        <x>250</x>
+        <y>40</y>
+        <width>21</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font-weight: bold;</string>
+      </property>
+      <property name="text">
+       <string>-</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="tags_help_label">
+      <property name="geometry">
+       <rect>
+        <x>250</x>
+        <y>70</y>
+        <width>21</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="cursor">
+       <cursorShape>PointingHandCursor</cursorShape>
+      </property>
+      <property name="toolTip">
+       <string>What is this option ?</string>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font-size: 18px; color: blue; border: 1px solid black; border-radius: 10px</string>
+      </property>
+      <property name="text">
+       <string>?</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QGroupBox" name="groupBox_10">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>270</y>
+       <width>281</width>
+       <height>121</height>
+      </rect>
+     </property>
+     <property name="title">
+      <string>Mimes to recognize as file</string>
+     </property>
+     <property name="flat">
+      <bool>false</bool>
+     </property>
+     <widget class="QTableWidget" name="files_tableWidget">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>20</y>
+        <width>231</width>
+        <height>81</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true"/>
+      </property>
+      <attribute name="horizontalHeaderCascadingSectionResizes">
+       <bool>false</bool>
+      </attribute>
+      <attribute name="verticalHeaderCascadingSectionResizes">
+       <bool>false</bool>
+      </attribute>
+      <column>
+       <property name="text">
+        <string>Mime</string>
+       </property>
+      </column>
+     </widget>
+     <widget class="QPushButton" name="add_file_pushButton">
+      <property name="geometry">
+       <rect>
+        <x>250</x>
+        <y>20</y>
+        <width>21</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font-weight: bold;</string>
+      </property>
+      <property name="text">
+       <string>+</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="remove_file_pushButton">
+      <property name="geometry">
+       <rect>
+        <x>250</x>
+        <y>40</y>
+        <width>21</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font-weight: bold;</string>
+      </property>
+      <property name="text">
+       <string>-</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="files_help_label">
+      <property name="geometry">
+       <rect>
+        <x>250</x>
+        <y>70</y>
+        <width>21</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="cursor">
+       <cursorShape>PointingHandCursor</cursorShape>
+      </property>
+      <property name="toolTip">
+       <string>What is this option ?</string>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font-size: 18px; color: blue; border: 1px solid black; border-radius: 10px</string>
+      </property>
+      <property name="text">
+       <string>?</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QGroupBox" name="groupBox_6">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>10</y>
+       <width>281</width>
+       <height>121</height>
+      </rect>
+     </property>
+     <property name="title">
+      <string>Bad links</string>
+     </property>
+     <property name="flat">
+      <bool>false</bool>
+     </property>
+     <widget class="QTableWidget" name="bad_links_tableWidget">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>20</y>
+        <width>231</width>
+        <height>81</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true"/>
+      </property>
+      <attribute name="horizontalHeaderCascadingSectionResizes">
+       <bool>false</bool>
+      </attribute>
+      <attribute name="verticalHeaderCascadingSectionResizes">
+       <bool>false</bool>
+      </attribute>
+      <column>
+       <property name="text">
+        <string>Pattern</string>
+       </property>
+      </column>
+     </widget>
+     <widget class="QPushButton" name="add_bad_link_pushButton">
+      <property name="geometry">
+       <rect>
+        <x>250</x>
+        <y>20</y>
+        <width>21</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font-weight: bold;</string>
+      </property>
+      <property name="text">
+       <string>+</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="remove_bad_link_pushButton">
+      <property name="geometry">
+       <rect>
+        <x>250</x>
+        <y>40</y>
+        <width>21</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font-weight: bold;</string>
+      </property>
+      <property name="text">
+       <string>-</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="bad_links_help_label">
+      <property name="geometry">
+       <rect>
+        <x>250</x>
+        <y>70</y>
+        <width>21</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="cursor">
+       <cursorShape>PointingHandCursor</cursorShape>
+      </property>
+      <property name="toolTip">
+       <string>What is this option ?</string>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font-size: 18px; color: blue; border: 1px solid black; border-radius: 10px</string>
+      </property>
+      <property name="text">
+       <string>?</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QGroupBox" name="groupBox_8">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>140</y>
+       <width>281</width>
+       <height>121</height>
+      </rect>
+     </property>
+     <property name="title">
+      <string>Schemes</string>
+     </property>
+     <property name="flat">
+      <bool>false</bool>
+     </property>
+     <widget class="QTableWidget" name="schemes_tableWidget">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>20</y>
+        <width>231</width>
+        <height>81</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true"/>
+      </property>
+      <attribute name="horizontalHeaderCascadingSectionResizes">
+       <bool>false</bool>
+      </attribute>
+      <attribute name="verticalHeaderCascadingSectionResizes">
+       <bool>false</bool>
+      </attribute>
+      <column>
+       <property name="text">
+        <string>Scheme</string>
+       </property>
+      </column>
+     </widget>
+     <widget class="QPushButton" name="add_scheme_pushButton">
+      <property name="geometry">
+       <rect>
+        <x>250</x>
+        <y>20</y>
+        <width>21</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font-weight: bold;</string>
+      </property>
+      <property name="text">
+       <string>+</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="remove_scheme_pushButton">
+      <property name="geometry">
+       <rect>
+        <x>250</x>
+        <y>40</y>
+        <width>21</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font-weight: bold;</string>
+      </property>
+      <property name="text">
+       <string>-</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="schemes_help_label">
+      <property name="geometry">
+       <rect>
+        <x>250</x>
+        <y>70</y>
+        <width>21</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="cursor">
+       <cursorShape>PointingHandCursor</cursorShape>
+      </property>
+      <property name="toolTip">
+       <string>What is this option ?</string>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font-size: 18px; color: blue; border: 1px solid black; border-radius: 10px</string>
+      </property>
+      <property name="text">
+       <string>?</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QGroupBox" name="groupBox_12">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>400</y>
+       <width>571</width>
+       <height>61</height>
+      </rect>
+     </property>
+     <property name="title">
+      <string>Proxy Settings</string>
+     </property>
+     <property name="flat">
+      <bool>false</bool>
+     </property>
+     <widget class="QLabel" name="label_5">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>20</y>
+        <width>101</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>HTTP/HTTPS Proxy : </string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="proxy_address_lineEdit">
+      <property name="geometry">
+       <rect>
+        <x>112</x>
+        <y>20</y>
+        <width>261</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="placeholderText">
+       <string>http://...</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_6">
+      <property name="geometry">
+       <rect>
+        <x>380</x>
+        <y>20</y>
+        <width>31</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Port :</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="proxy_port_lineEdit">
+      <property name="geometry">
+       <rect>
+        <x>420</x>
+        <y>20</y>
+        <width>141</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="placeholderText">
+       <string>1080</string>
+      </property>
+     </widget>
+    </widget>
    </widget>
   </widget>
  </widget>
