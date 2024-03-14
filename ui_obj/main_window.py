@@ -3,7 +3,7 @@ from PyQt6 import QtWidgets
 from seleniumwire import webdriver 
 from seleniumwire.utils import decode as sw_decode
 from selenium.webdriver.common.by import By
-from gui_helpers import add_link
+from ui_obj.gui_helpers import add_link
 from PyQt6.QtCore import *
 import json
 import time
