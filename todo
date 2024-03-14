@@ -2,6 +2,13 @@ Todo :
     2. Save request that has parameters
     4. Find iframe tags too
 
-    7. Before "[*] Enter a string for origin contains:" ask for type of origins detection
 
-    8. xpath table should has two column not one in ui_obj\project_settings.py
+    xpath table should has two column not one in ui_obj\project_settings.py [Done]
+    
+    * random_reqs_delay,
+        random_reqs_delay_from, 
+        random_reqs_delay_to, 
+        reqs_delay
+        are done in main_window.py for every request
+
+    * url_regex_patterns is done in main_window.py

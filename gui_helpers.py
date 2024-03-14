@@ -67,7 +67,9 @@ def create_new_project_next(project_name):
                     "proxy": {
                         "address": "",
                         "port": 1080
-                    }
+                    },
+                    "depth": 3,
+                    "infinite_depth": False
                 }
                 f_.write(json.dumps(settings))
                 pass
@@ -188,3 +190,13 @@ jpeg, png, ...
 """,
     }
 }
+
+
+
+def add_link(links, link, depth=0):
+    links.append({
+            "link": link,
+            "checked": 0,
+            "depth": depth
+        })
+    return links

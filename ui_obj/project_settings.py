@@ -13,12 +13,17 @@ class ProjectSettingsWindow(QtWidgets.QMainWindow, project_settings):
         super(ProjectSettingsWindow, self).__init__(*args, **kwargs)
         
         self.setupUi(self)
-        self.project_name = "test"
+        self.project_name = "divar.ir"
 
         with open("projects/" + self.project_name + "/settings.json", "r") as f_:
             self.settings = json.loads(f_.read())
+
+        
+        
         
         self.url_lineEdit.setText(self.settings['url'])
+
+        self.infinite_depth_checkBox.clicked.connect(self.depth_func)
         
         self.origins_compare_radioButton.clicked.connect(self.compare_origins)
         self.origins_compare_ratio_horizontalSlider.valueChanged.connect(self.origins_compare_ratio)
@@ -67,6 +72,11 @@ class ProjectSettingsWindow(QtWidgets.QMainWindow, project_settings):
         # Init tables
         self.init()
 
+    def depth_func(self):
+        if self.infinite_depth_checkBox.isChecked():
+            self.depth_lineEdit.setDisabled(True)
+        else:
+            self.depth_lineEdit.setDisabled(False)
 
     def init(self):
         # Set init values
@@ -78,8 +88,10 @@ class ProjectSettingsWindow(QtWidgets.QMainWindow, project_settings):
         self.origins_contain_lineEdit.setText(",".join(self.settings['origin_contains_list']))
         self.proxy_address_lineEdit.setText(self.settings["proxy"]['address'])
         self.proxy_port_lineEdit.setText(str(self.settings["proxy"]['port']))
+        self.depth_lineEdit.setText(str(self.settings['depth']))
 
         # Set init checked 
+        self.infinite_depth_checkBox.setChecked(self.settings['infinite_depth'])
         self.random_reqs_delay_checkBox.setChecked(self.settings['random_reqs_delay'])
 
         # Set init disability
@@ -92,6 +104,12 @@ class ProjectSettingsWindow(QtWidgets.QMainWindow, project_settings):
             self.rnd_req_delay_to_lineEdit.setDisabled(True)
             self.req_delay_lineEdit.setDisabled(False)
         
+        if self.settings['infinite_depth']:
+            self.depth_lineEdit.setDisabled(True)
+        else:
+            self.depth_lineEdit.setDisabled(False)
+
+
         if self.settings['origin_compare']:
             self.origins_compare_radioButton.setChecked(True)
             self.origins_compare_ratio_horizontalSlider.setDisabled(False)
@@ -267,6 +285,14 @@ class ProjectSettingsWindow(QtWidgets.QMainWindow, project_settings):
             QMessageBox.critical(self, "Error", "Proxy port should be a number .")
             return
         print(self.settings)
+
+        # Add depth to settings
+        try:
+            self.settings['depth'] = int(self.depth_lineEdit.text())
+        except:
+            QMessageBox.critical(self, "Error", "Depth shoul be a number .")
+            return
+        self.settings['infinite_depth'] = self.infinite_depth_checkBox.isChecked()
 
         with open("projects/" + self.project_name + "/settings.json", "w") as f_:
             f_.write(json.dumps(self.settings))

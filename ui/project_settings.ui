@@ -1009,7 +1009,7 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>400</y>
+       <y>470</y>
        <width>571</width>
        <height>61</height>
       </rect>
@@ -1070,6 +1070,61 @@
       </property>
       <property name="placeholderText">
        <string>1080</string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QGroupBox" name="groupBox_13">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>400</y>
+       <width>571</width>
+       <height>61</height>
+      </rect>
+     </property>
+     <property name="title">
+      <string>Depth Settings</string>
+     </property>
+     <property name="flat">
+      <bool>false</bool>
+     </property>
+     <widget class="QLabel" name="label_9">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>20</y>
+        <width>41</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Depth :</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="depth_lineEdit">
+      <property name="geometry">
+       <rect>
+        <x>50</x>
+        <y>20</y>
+        <width>71</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="placeholderText">
+       <string>1,2,3,...</string>
+      </property>
+     </widget>
+     <widget class="QCheckBox" name="infinite_depth_checkBox">
+      <property name="geometry">
+       <rect>
+        <x>130</x>
+        <y>20</y>
+        <width>131</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Infinite Depth Check</string>
       </property>
      </widget>
     </widget>
