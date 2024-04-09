@@ -7,9 +7,6 @@ import sys
 import os
 from project_settings import ProjectSettingsWindow
 
-class Communicate(QObject):
-    project_name = pyqtSignal(str)
-
 class CreateNewProjectWindow(QtWidgets.QMainWindow, create_new_project):
 
     def __init__(self, *args, obj=None, **kwargs):
@@ -43,11 +40,13 @@ class CreateNewProjectWindow(QtWidgets.QMainWindow, create_new_project):
 
         project_name = self.project_name_lineEdit.text()
         
-        # Create a signal to send project name through windows
-        self.communicate = Communicate()
-        self.communicate.project_name.emit(project_name)
-
-        result = create_new_project_next(project_name)
+        # Create a new project or open recent project ?
+        selected_project = self.projects_listView.selectedIndexes()
+        if selected_project:
+            project_name = selected_project[0].data()
+            result = [True, ""]
+        else:
+            result = create_new_project_next(project_name)
 
         if result[0] == False:
             QMessageBox.critical(self, result[1], result[2])

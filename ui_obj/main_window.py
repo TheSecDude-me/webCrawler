@@ -42,11 +42,7 @@ class Interceptor(QThread):
     def interceptor(self, req, res):
         self.add_to_listWidget(req, res)
     
-
-
-
-
-class Crawler(QThread):
+class Crawler(): #QThread):
     def __init__(self):
         super(Crawler, self).__init__()
         self.quit_flag = False
@@ -219,7 +215,8 @@ class MainWindow(QtWidgets.QMainWindow, MainWindow):
             self.crawler.links = self.links
             self.crawler.settings = self.settings
             self.crawler.requests_tableWidget = self.requests_tableWidget
-            self.crawler.start()
+            self.crawler.run()
+            # self.crawler.start()
         else:
             self.crawler.quit_flag = True
             self.crawler.wait()
