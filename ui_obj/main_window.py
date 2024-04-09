@@ -186,9 +186,10 @@ class Crawler(QThread):
 
 
 class MainWindow(QtWidgets.QMainWindow, MainWindow):
-    def __init__(self, *args, obj=None, **kwargs):
+    def __init__(self, string_received, *args, obj=None, **kwargs):
         super(MainWindow, self).__init__(*args, **kwargs)
-        self.project_name = "divar.ir"
+        self.project_name = string_received
+        print(self.project_name)
         self.setupUi(self)
         
         with open("projects/" + self.project_name + "/settings.json", "r") as f_:

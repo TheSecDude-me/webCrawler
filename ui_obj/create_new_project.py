@@ -5,6 +5,10 @@ from ui_obj.gui_helpers import delete_folder, create_new_project_next
 from PyQt6.QtCore import *
 import sys
 import os
+from project_settings import ProjectSettingsWindow
+
+class Communicate(QObject):
+    project_name = pyqtSignal(str)
 
 class CreateNewProjectWindow(QtWidgets.QMainWindow, create_new_project):
 
@@ -36,8 +40,15 @@ class CreateNewProjectWindow(QtWidgets.QMainWindow, create_new_project):
                 delete_folder("./projects/" + project)
                 self.projects_listView.model().removeRow(index.row())
     def next(self):
+
         project_name = self.project_name_lineEdit.text()
+        
+        # Create a signal to send project name through windows
+        self.communicate = Communicate()
+        self.communicate.project_name.emit(project_name)
+
         result = create_new_project_next(project_name)
+
         if result[0] == False:
             QMessageBox.critical(self, result[1], result[2])
             return 
@@ -45,7 +56,12 @@ class CreateNewProjectWindow(QtWidgets.QMainWindow, create_new_project):
             self.get_recent_projects()
             self.close()
             # Now show next window
+            self.project_settings_window = ProjectSettingsWindow(string_received=project_name)
+            self.project_settings_window.show()
+            self.close()    
             return
+        
+        
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
     window = CreateNewProjectWindow()

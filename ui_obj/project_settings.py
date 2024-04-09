@@ -6,14 +6,17 @@ import sys
 import json
 from urllib.parse import urlparse
 import re
+from main_window import MainWindow
 
 class ProjectSettingsWindow(QtWidgets.QMainWindow, project_settings):
 
-    def __init__(self, *args, obj=None, **kwargs):
+    def __init__(self, string_received,  *args, obj=None, **kwargs):
         super(ProjectSettingsWindow, self).__init__(*args, **kwargs)
         
         self.setupUi(self)
-        self.project_name = "divar.ir"
+        # self.project_name = "project1"
+        self.project_name = string_received
+        print(self.project_name)
 
         with open("projects/" + self.project_name + "/settings.json", "r") as f_:
             self.settings = json.loads(f_.read())
@@ -298,7 +301,9 @@ class ProjectSettingsWindow(QtWidgets.QMainWindow, project_settings):
             f_.write(json.dumps(self.settings))
         # self.close()
         # Show next window   
-
+        self.main_window = MainWindow(string_received=self.project_name)
+        self.main_window.show()
+        self.close()
     def cancel(self):
         try:
             reply = QMessageBox.question(self, 'Cancel', 'Are you sure you want to cancel it ?',
