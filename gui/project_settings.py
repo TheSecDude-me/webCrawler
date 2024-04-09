@@ -1,7 +1,7 @@
 from ui.project_settings import Ui_Form as project_settings
 from PyQt6 import QtWidgets, QtGui
 from PyQt6.QtWidgets import QMessageBox
-from ui_obj.gui_helpers import delete_folder, help_messages
+from gui_helpers import delete_folder, help_messages
 import sys
 import json
 from urllib.parse import urlparse

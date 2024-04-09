@@ -1,7 +1,7 @@
 from ui.create_new_project import Ui_Form as create_new_project
 from PyQt6 import QtWidgets, QtGui
 from PyQt6.QtWidgets import QMessageBox
-from ui_obj.gui_helpers import delete_folder, create_new_project_next
+from gui_helpers import delete_folder, create_new_project_next
 from PyQt6.QtCore import *
 import sys
 import os

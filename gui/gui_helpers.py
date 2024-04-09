@@ -193,10 +193,13 @@ jpeg, png, ...
 
 
 
-def add_link(links, link, depth=0):
+def add_link(links, link, depth=0, project_name= "", add_to_file = False):
     links.append({
             "link": link,
             "checked": 0,
             "depth": depth
         })
+    if add_to_file == True:
+        with open("projects/" + project_name + "/links_found.json", "w") as f_:
+            json.dump(links, f_)
     return links
